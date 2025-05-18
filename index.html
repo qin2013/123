@@ -1,2 +1,982 @@
-
-123456
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>和平精英高级点单系统 | VIP俱乐部</title>
+    <style>
+        :root {
+            --primary: #ff4d4f;
+            --secondary: #1890ff;
+            --dark: #1a1a1a;
+            --light: #f5f5f5;
+            --success: #52c41a;
+            --warning: #faad14;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Microsoft YaHei', sans-serif;
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+            background-image: url('https://img.freepik.com/free-vector/dark-hexagonal-background-with-gradient-color_79603-1409.jpg');
+            background-size: cover;
+            background-attachment: fixed;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 0;
+            position: relative;
+            margin-bottom: 40px;
+        }
+        
+        header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff4d4f, #fadb14);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(255, 77, 79, 0.3);
+        }
+        
+        .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            letter-spacing: 2px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        
+        .badge-vip {
+            background: linear-gradient(45deg, #ffd700, #ff9500);
+            color: #000;
+        }
+        
+        .badge-new {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .tab {
+            padding: 10px 25px;
+            margin: 0 5px;
+            cursor: pointer;
+            border-radius: 30px;
+            font-weight: bold;
+            transition: all 0.3s;
+            border: 1px solid transparent;
+        }
+        
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .tab.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .filter-bar {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .filter-group select, 
+        .filter-group input {
+            width: 100%;
+            padding: 8px 12px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+        }
+        
+        .reset-btn {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 8px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            align-self: flex-end;
+        }
+        
+        .reset-btn:hover {
+            background: rgba(255, 77, 79, 0.1);
+        }
+        
+        .players-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .player-card {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--primary);
+        }
+        
+        .player-header {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(135deg, #2b2b2b, #1a1a1a);
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .player-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary);
+            margin-right: 15px;
+        }
+        
+        .player-info {
+            flex: 1;
+        }
+        
+        .player-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .player-id {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .player-status {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            font-size: 0.7rem;
+            padding: 3px 8px;
+            border-radius: 4px;
+        }
+        
+        .status-online {
+            background: var(--success);
+            color: white;
+        }
+        
+        .status-busy {
+            background: var(--warning);
+            color: black;
+        }
+        
+        .status-offline {
+            background: #666;
+            color: white;
+        }
+        
+        .player-body {
+            padding: 15px;
+        }
+        
+        .player-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .stat-item {
+            background: rgba(20, 20, 20, 0.5);
+            padding: 8px;
+            border-radius: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 3px;
+        }
+        
+        .stat-value {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+        
+        .rank-icon {
+            width: 20px;
+            height: 20px;
+            vertical-align: middle;
+            margin-right: 5px;
+        }
+        
+        .player-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .player-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background: rgba(20, 20, 20, 0.5);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .player-price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .player-price span {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .order-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+        }
+        
+        .order-btn:hover {
+            background: #ff1a1d;
+            transform: translateY(-2px);
+        }
+        
+        .order-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+        
+        .order-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            position: relative;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 20px rgba(255, 77, 79, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .close-modal:hover {
+            color: var(--primary);
+        }
+        
+        .modal-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+            text-align: center;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
+        }
+        
+        .form-group input, 
+        .form-group select, 
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+        }
+        
+        .form-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: bold;
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            background: #ff1a1d;
+        }
+        
+        .player-highlight {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: var(--primary);
+            color: white;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        
+        .player-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+        
+        .player-tag {
+            background: rgba(24, 144, 255, 0.2);
+            color: var(--secondary);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+        }
+        
+        .player-tag.vip {
+            background: rgba(255, 215, 0, 0.2);
+            color: #ffd700;
+        }
+        
+        .player-tag.hot {
+            background: rgba(255, 77, 79, 0.2);
+            color: var(--primary);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 50px;
+        }
+        
+        @media (max-width: 768px) {
+            .players-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            .filter-bar {
+                flex-direction: column;
+            }
+            
+            .logo {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">和平精英高级点单系统</div>
+            <div class="subtitle">VIP俱乐部专属 · 专业陪玩代练服务平台</div>
+        </header>
+        
+        <div class="tabs">
+            <div class="tab active" data-tab="all">全部打手</div>
+            <div class="tab" data-tab="high">王牌战神</div>
+            <div class="tab" data-tab="mid">钻石皇冠</div>
+            <div class="tab" data-tab="fun">娱乐陪玩</div>
+        </div>
+        
+        <div class="filter-bar">
+            <div class="filter-group">
+                <label for="rank-filter">段位筛选</label>
+                <select id="rank-filter">
+                    <option value="all">全部段位</option>
+                    <option value="bronze">青铜</option>
+                    <option value="silver">白银</option>
+                    <option value="gold">黄金</option>
+                    <option value="platinum">铂金</option>
+                    <option value="diamond">钻石</option>
+                    <option value="crown">皇冠</option>
+                    <option value="ace">王牌</option>
+                    <option value="conqueror">战神</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="price-filter">价格区间</label>
+                <select id="price-filter">
+                    <option value="all">全部价格</option>
+                    <option value="0-20">0-20元</option>
+                    <option value="20-40">20-40元</option>
+                    <option value="40-60">40-60元</option>
+                    <option value="60+">60元以上</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="status-filter">在线状态</label>
+                <select id="status-filter">
+                    <option value="all">全部状态</option>
+                    <option value="online">在线</option>
+                    <option value="busy">忙碌</option>
+                </select>
+            </div>
+            
+            <button class="reset-btn">重置筛选</button>
+        </div>
+        
+        <div class="players-grid" id="players-container">
+            <!-- 玩家卡片将通过JS动态生成 -->
+        </div>
+        
+        <footer>
+            © 2024 和平精英高级点单系统 | VIP俱乐部专属 | 安全交易保障
+        </footer>
+    </div>
+    
+    <!-- 下单模态框 -->
+    <div class="order-modal" id="order-modal">
+        <div class="modal-content">
+            <button class="close-modal" id="close-modal">&times;</button>
+            <h2 class="modal-title">立即下单</h2>
+            
+            <div class="form-group">
+                <label for="game-id">游戏ID</label>
+                <input type="text" id="game-id" placeholder="请输入您的游戏ID">
+            </div>
+            
+            <div class="form-group">
+                <label for="current-rank">当前段位</label>
+                <select id="current-rank">
+                    <option value="bronze">青铜</option>
+                    <option value="silver">白银</option>
+                    <option value="gold">黄金</option>
+                    <option value="platinum">铂金</option>
+                    <option value="diamond">钻石</option>
+                    <option value="crown">皇冠</option>
+                    <option value="ace">王牌</option>
+                    <option value="conqueror">战神</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="service-type">服务类型</label>
+                <select id="service-type">
+                    <option value="rank">排位上分</option>
+                    <option value="fun">娱乐陪玩</option>
+                    <option value="train">技术教学</option>
+                    <option value="custom">自定义</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="hours">服务时长(小时)</label>
+                <input type="number" id="hours" min="1" max="10" value="1">
+            </div>
+            
+            <div class="form-group">
+                <label for="special-request">特殊要求</label>
+                <textarea id="special-request" placeholder="如指定枪械、语音要求等"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="contact">联系方式</label>
+                <input type="text" id="contact" placeholder="QQ/微信/手机号">
+            </div>
+            
+            <button class="submit-btn" id="submit-order">确认下单</button>
+        </div>
+    </div>
+    
+    <script>
+        // 打手数据
+        const playersData = [
+            {
+                id: 1,
+                name: "冷锋",
+                avatar: "https://randomuser.me/api/portraits/men/32.jpg",
+                rank: "conqueror",
+                kd: 8.5,
+                position: "狙击手",
+                price: 50,
+                unit: "局",
+                status: "online",
+                tags: ["vip", "hot"],
+                description: "职业选手出身，擅长远程狙击，一枪一个小朋友",
+                contact: "VX: lf123",
+                group: "high"
+            },
+            {
+                id: 2,
+                name: "雪梨",
+                avatar: "https://randomuser.me/api/portraits/women/44.jpg",
+                rank: "ace",
+                stars: 6,
+                kd: 6.2,
+                position: "指挥位",
+                price: 40,
+                unit: "局",
+                status: "busy",
+                tags: ["vip"],
+                description: "战术大师，团队核心，带你吃鸡不是梦",
+                contact: "QQ: 112233",
+                group: "high"
+            },
+            {
+                id: 3,
+                name: "夜枭",
+                avatar: "https://randomuser.me/api/portraits/men/22.jpg",
+                rank: "conqueror",
+                kd: 9.0,
+                position: "突击手",
+                price: 60,
+                unit: "局",
+                status: "online",
+                tags: ["hot"],
+                description: "近战王者，刚枪无敌，决赛圈杀手",
+                contact: "TG: @yx666",
+                group: "high"
+            },
+            {
+                id: 4,
+                name: "小熊",
+                avatar: "https://randomuser.me/api/portraits/women/63.jpg",
+                rank: "crown",
+                stars: 2,
+                kd: 4.5,
+                weapons: "M416+98K",
+                price: 30,
+                unit: "小时",
+                status: "online",
+                voice: "少女音",
+                description: "可爱又强力，98K精准爆头，M416稳如老狗",
+                contact: "VX: xiong123",
+                group: "mid"
+            },
+            {
+                id: 5,
+                name: "阿杰",
+                avatar: "https://randomuser.me/api/portraits/men/45.jpg",
+                rank: "diamond",
+                stars: 1,
+                kd: 3.8,
+                weapons: "AKM+UMP",
+                price: 25,
+                unit: "小时",
+                status: "online",
+                voice: "青叔音",
+                description: "AKM压枪稳，UMP近战强，耐心教学",
+                contact: "QQ: 334455",
+                group: "mid"
+            },
+            {
+                id: 6,
+                name: "奶糖",
+                avatar: "https://randomuser.me/api/portraits/women/28.jpg",
+                rank: "gold",
+                kd: 2.1,
+                specialty: "搞笑整活",
+                price: 20,
+                unit: "小时",
+                status: "online",
+                voice: "萝莉音",
+                description: "开心第一，吃鸡第二，全程欢乐不断",
+                contact: "VX: nt888",
+                group: "fun"
+            },
+            {
+                id: 7,
+                name: "老K",
+                avatar: "https://randomuser.me/api/portraits/men/55.jpg",
+                rank: "platinum",
+                kd: 2.5,
+                specialty: "相声陪玩",
+                price: 15,
+                unit: "小时",
+                status: "busy",
+                voice: "大叔音",
+                description: "单口相声专业户，让你笑到忘记吃鸡",
+                contact: "QQ: 987654",
+                group: "fun"
+            },
+            {
+                id: 8,
+                name: "幽灵",
+                avatar: "https://randomuser.me/api/portraits/men/29.jpg",
+                rank: "conqueror",
+                kd: 7.8,
+                position: "全能选手",
+                price: 55,
+                unit: "局",
+                status: "online",
+                tags: ["vip"],
+                description: "全能型选手，任何位置都能胜任，稳定上分",
+                contact: "VX: youling666",
+                group: "high"
+            }
+        ];
+        
+        // 段位图标映射
+        const rankIcons = {
+            bronze: "🥉",
+            silver: "🥈",
+            gold: "🥇",
+            platinum: "💎",
+            diamond: "🔷",
+            crown: "👑",
+            ace: "🃏",
+            conqueror: "🔥"
+        };
+        
+        // 段位名称映射
+        const rankNames = {
+            bronze: "青铜",
+            silver: "白银",
+            gold: "黄金",
+            platinum: "铂金",
+            diamond: "钻石",
+            crown: "皇冠",
+            ace: "王牌",
+            conqueror: "战神"
+        };
+        
+        // 初始化页面
+        document.addEventListener('DOMContentLoaded', function() {
+            renderPlayers(playersData);
+            setupEventListeners();
+        });
+        
+        // 渲染玩家卡片
+        function renderPlayers(players) {
+            const container = document.getElementById('players-container');
+            container.innerHTML = '';
+            
+            if (players.length === 0) {
+                container.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.5)">没有找到符合条件的打手</div>';
+                return;
+            }
+            
+            players.forEach(player => {
+                const card = document.createElement('div');
+                card.className = 'player-card';
+                card.dataset.id = player.id;
+                card.dataset.group = player.group;
+                card.dataset.rank = player.rank;
+                card.dataset.status = player.status;
+                card.dataset.price = player.price;
+                
+                // 构建卡片HTML
+                let cardHTML = `
+                    <div class="player-header">
+                        ${player.tags && player.tags.includes('hot') ? '<div class="player-highlight">热门</div>' : ''}
+                        <img src="${player.avatar}" alt="${player.name}" class="player-avatar">
+                        <div class="player-info">
+                            <div class="player-name">
+                                ${player.name}
+                                ${player.tags && player.tags.includes('vip') ? '<span class="badge badge-vip">VIP</span>' : ''}
+                            </div>
+                            <div class="player-id">ID: ${player.contact.split(':')[0]}</div>
+                        </div>
+                        <div class="player-status ${'status-' + player.status}">
+                            ${player.status === 'online' ? '在线' : player.status === 'busy' ? '忙碌' : '离线'}
+                        </div>
+                    </div>
+                    <div class="player-body">
+                `;
+                
+                if (player.group === 'high' || player.group === 'mid') {
+                    cardHTML += `
+                        <div class="player-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">段位</div>
+                                <div class="stat-value">
+                                    ${rankIcons[player.rank]} ${rankNames[player.rank]}${player.stars ? ` ${player.stars}星` : ''}
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">KD</div>
+                                <div class="stat-value">${player.kd}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">${player.group === 'high' ? '位置' : '擅长枪械'}</div>
+                                <div class="stat-value">${player.position || player.weapons}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">${player.group === 'high' ? '单价' : '语音'}</div>
+                                <div class="stat-value">${player.group === 'high' ? `¥${player.price}/${player.unit}` : player.voice}</div>
+                            </div>
+                        </div>
+                    `;
+                } else {
+                    cardHTML += `
+                        <div class="player-stats">
+                            <div class="stat-item">
+                                <div class="stat-label">段位</div>
+                                <div class="stat-value">
+                                    ${rankIcons[player.rank]} ${rankNames[player.rank]}
+                                </div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">KD</div>
+                                <div class="stat-value">${player.kd}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">特色</div>
+                                <div class="stat-value">${player.specialty}</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-label">语音</div>
+                                <div class="stat-value">${player.voice}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+                
+                cardHTML += `
+                        <div class="player-desc">${player.description}</div>
+                        ${player.tags ? '<div class="player-tags">' + player.tags.map(tag => 
+                            `<span class="player-tag ${tag}">${tag === 'vip' ? 'VIP认证' : tag === 'hot' ? '热门' : ''}</span>`
+                        ).join('') + '</div>' : ''}
+                    </div>
+                    <div class="player-footer">
+                        <div class="player-price">¥${player.price}<span>/${player.unit}</span></div>
+                        <button class="order-btn" data-id="${player.id}">立即下单</button>
+                    </div>
+                `;
+                
+                card.innerHTML = cardHTML;
+                container.appendChild(card);
+            });
+        }
+        
+        // 设置事件监听
+        function setupEventListeners() {
+            // 标签切换
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const tabType = this.dataset.tab;
+                    filterPlayers();
+                });
+            });
+            
+            // 筛选器变化
+            document.querySelectorAll('#rank-filter, #price-filter, #status-filter').forEach(filter => {
+                filter.addEventListener('change', filterPlayers);
+            });
+            
+            // 重置按钮
+            document.querySelector('.reset-btn').addEventListener('click', function() {
+                document.getElementById('rank-filter').value = 'all';
+                document.getElementById('price-filter').value = 'all';
+                document.getElementById('status-filter').value = 'all';
+                document.querySelector('.tab[data-tab="all"]').click();
+                filterPlayers();
+            });
+            
+            // 下单按钮
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('order-btn')) {
+                    const playerId = parseInt(e.target.dataset.id);
+                    openOrderModal(playerId);
+                }
+            });
+            
+            // 关闭模态框
+            document.getElementById('close-modal').addEventListener('click', closeOrderModal);
+            
+            // 提交订单
+            document.getElementById('submit-order').addEventListener('click', submitOrder);
+        }
+        
+        // 筛选玩家
+        function filterPlayers() {
+            const rankFilter = document.getElementById('rank-filter').value;
+            const priceFilter = document.getElementById('price-filter').value;
+            const statusFilter = document.getElementById('status-filter').value;
+            const tabFilter = document.querySelector('.tab.active').dataset.tab;
+            
+            let filteredPlayers = playersData.filter(player => {
+                // 标签筛选
+                if (tabFilter !== 'all' && player.group !== tabFilter) return false;
+                
+                // 段位筛选
+                if (rankFilter !== 'all' && player.rank !== rankFilter) return false;
+                
+                // 价格筛选
+                if (priceFilter !== 'all') {
+                    const [min, max] = priceFilter === '60+' ? [60, Infinity] : priceFilter.split('-').map(Number);
+                    if (player.price < min || player.price > max) return false;
+                }
+                
+                // 状态筛选
+                if (statusFilter !== 'all' && player.status !== statusFilter) return false;
+                
+                return true;
+            });
+            
+            renderPlayers(filteredPlayers);
+        }
+        
+        // 打开下单模态框
+        function openOrderModal(playerId) {
+            const player = playersData.find(p => p.id === playerId);
+            if (!player) return;
+            
+            document.getElementById('order-modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // 可以在这里预填充一些信息
+            document.querySelector('.modal-title').textContent = `下单: ${player.name}`;
+        }
+        
+        // 关闭下单模态框
+        function closeOrderModal() {
+            document.getElementById('order-modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        // 提交订单
+        function submitOrder() {
+            const gameId = document.getElementById('game-id').value.trim();
+            const currentRank = document.getElementById('current-rank').value;
+            const serviceType = document.getElementById('service-type').value;
+            const hours = document.getElementById('hours').value;
+            const specialRequest = document.getElementById('special-request').value.trim();
+            const contact = document.getElementById('contact').value.trim();
+            
+            if (!gameId || !contact) {
+                alert('请填写游戏ID和联系方式');
+                return;
+            }
+            
+            // 这里应该是发送到服务器的逻辑
+            // 模拟成功下单
+            alert('下单成功！客服将很快联系您确认订单详情');
+            closeOrderModal();
+            
+            // 清空表单
+            document.getElementById('game-id').value = '';
+            document.getElementById('special-request').value = '';
+            document.getElementById('contact').value = '';
+            document.getElementById('hours').value = '1';
+        }
+    </script>
+</body>
+</html>
