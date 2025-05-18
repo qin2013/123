@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>和平精英高级点单系统 | sm俱乐部</title>
+    <title>和平精英陪玩点单 | 直接联系高手</title>
     <style>
         :root {
             --primary: #ff4d4f;
@@ -310,8 +310,8 @@
             color: rgba(255, 255, 255, 0.6);
         }
         
-        .order-btn {
-            background: var(--primary);
+        .contact-btn {
+            background: var(--secondary);
             color: white;
             border: none;
             padding: 6px 15px;
@@ -319,110 +319,13 @@
             cursor: pointer;
             transition: all 0.3s;
             font-weight: bold;
+            text-decoration: none;
+            display: inline-block;
         }
         
-        .order-btn:hover {
-            background: #ff1a1d;
+        .contact-btn:hover {
+            background: #0c7cd5;
             transform: translateY(-2px);
-        }
-        
-        .order-modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-        }
-        
-        .order-modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .modal-content {
-            background: #1a1a1a;
-            border-radius: 10px;
-            width: 90%;
-            max-width: 500px;
-            padding: 30px;
-            position: relative;
-            border: 1px solid var(--primary);
-            box-shadow: 0 0 20px rgba(255, 77, 79, 0.3);
-        }
-        
-        .close-modal {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .close-modal:hover {
-            color: var(--primary);
-        }
-        
-        .modal-title {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--primary);
-            text-align: center;
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-size: 0.9rem;
-            color: rgba(255, 255, 255, 0.7);
-        }
-        
-        .form-group input, 
-        .form-group select, 
-        .form-group textarea {
-            width: 100%;
-            padding: 10px 15px;
-            background: rgba(30, 30, 30, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 5px;
-            color: white;
-        }
-        
-        .form-group textarea {
-            min-height: 100px;
-            resize: vertical;
-        }
-        
-        .submit-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-            width: 100%;
-            margin-top: 10px;
-        }
-        
-        .submit-btn:hover {
-            background: #ff1a1d;
         }
         
         .player-highlight {
@@ -462,6 +365,88 @@
             color: var(--primary);
         }
         
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+        
+        .music-control i {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .quick-nav {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 100;
+        }
+        
+        .nav-btn {
+            background: rgba(30, 30, 30, 0.8);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+            transition: all 0.3s;
+        }
+        
+        .nav-btn:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+        
+        .nav-btn i {
+            font-size: 1.2rem;
+            color: white;
+        }
+        
+        .search-box {
+            position: relative;
+            margin-bottom: 20px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 12px 20px;
+            background: rgba(30, 30, 30, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            color: white;
+            font-size: 1rem;
+            padding-left: 45px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
         footer {
             text-align: center;
             padding: 30px 0;
@@ -469,6 +454,26 @@
             font-size: 0.9rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             margin-top: 50px;
+        }
+        
+        .contact-info {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 30px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .contact-info h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .contact-info p {
+            margin-bottom: 10px;
+            line-height: 1.6;
         }
         
         @media (max-width: 768px) {
@@ -483,20 +488,30 @@
             .logo {
                 font-size: 2rem;
             }
+            
+            .quick-nav {
+                display: none;
+            }
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">和平精英高级点单系统</div>
-            <div class="subtitle">VIP俱乐部专属 · 专业陪玩代练服务平台</div>
+            <div class="logo">和平精英陪玩点单</div>
+            <div class="subtitle">直接联系高手 · 低价优质陪玩</div>
         </header>
+        
+        <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" id="search-input" placeholder="搜索打手名称、段位或特长...">
+        </div>
         
         <div class="tabs">
             <div class="tab active" data-tab="all">全部打手</div>
-            <div class="tab" data-tab="high">王牌战神</div>
-            <div class="tab" data-tab="mid">钻石皇冠</div>
+            <div class="tab" data-tab="high">高端陪玩</div>
+            <div class="tab" data-tab="mid">性价比推荐</div>
             <div class="tab" data-tab="fun">娱乐陪玩</div>
         </div>
         
@@ -520,10 +535,10 @@
                 <label for="price-filter">价格区间</label>
                 <select id="price-filter">
                     <option value="all">全部价格</option>
-                    <option value="0-20">0-20元</option>
-                    <option value="20-40">20-40元</option>
-                    <option value="40-60">40-60元</option>
-                    <option value="60+">60元以上</option>
+                    <option value="0-10">0-10元</option>
+                    <option value="10-20">10-20元</option>
+                    <option value="20-30">20-30元</option>
+                    <option value="30+">30元以上</option>
                 </select>
             </div>
             
@@ -543,127 +558,104 @@
             <!-- 玩家卡片将通过JS动态生成 -->
         </div>
         
+        <div class="contact-info">
+            <h3><i class="fas fa-info-circle"></i> 使用说明</h3>
+            <p>1. 直接点击"联系打手"按钮复制微信号，添加时备注"和平精英陪玩"</p>
+            <p>2. 价格均为每小时单价，具体时长可与打手协商</p>
+            <p>3. 在线状态实时更新，建议优先选择"在线"打手</p>
+            <p>4. 遇到任何问题请联系客服微信: peiwan888</p>
+        </div>
+        
         <footer>
-            © 2025 和平精英高级点单系统 | VIP俱乐部专属 | 安全交易保障
+            © 2025 和平精英陪玩点单系统 | 安全交易保障 | 客服在线时间: 10:00-24:00
         </footer>
     </div>
     
-    <!-- 下单模态框 -->
-    <div class="order-modal" id="order-modal">
-        <div class="modal-content">
-            <button class="close-modal" id="close-modal">&times;</button>
-            <h2 class="modal-title">立即下单</h2>
-            
-            <div class="form-group">
-                <label for="game-id">游戏ID</label>
-                <input type="text" id="game-id" placeholder="请输入您的游戏ID">
-            </div>
-            
-            <div class="form-group">
-                <label for="current-rank">当前段位</label>
-                <select id="current-rank">
-                    <option value="bronze">青铜</option>
-                    <option value="silver">白银</option>
-                    <option value="gold">黄金</option>
-                    <option value="platinum">铂金</option>
-                    <option value="diamond">钻石</option>
-                    <option value="crown">皇冠</option>
-                    <option value="ace">王牌</option>
-                    <option value="conqueror">战神</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="service-type">服务类型</label>
-                <select id="service-type">
-                    <option value="rank">排位上分</option>
-                    <option value="fun">娱乐陪玩</option>
-                    <option value="train">技术教学</option>
-                    <option value="custom">自定义</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="hours">服务时长(小时)</label>
-                <input type="number" id="hours" min="1" max="10" value="1">
-            </div>
-            
-            <div class="form-group">
-                <label for="special-request">特殊要求</label>
-                <textarea id="special-request" placeholder="如指定枪械、语音要求等"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="contact">联系方式</label>
-                <input type="text" id="contact" placeholder="QQ/微信/手机号">
-            </div>
-            
-            <button class="submit-btn" id="submit-order">确认下单</button>
+    <!-- 快速导航 -->
+    <div class="quick-nav">
+        <div class="nav-btn" id="scroll-top" title="返回顶部">
+            <i class="fas fa-arrow-up"></i>
+        </div>
+        <div class="nav-btn" id="refresh-page" title="刷新页面">
+            <i class="fas fa-sync-alt"></i>
+        </div>
+        <div class="nav-btn" id="contact-service" title="联系客服">
+            <i class="fas fa-headset"></i>
         </div>
     </div>
     
+    <!-- 音乐控制 -->
+    <div class="music-control" id="music-control" title="背景音乐控制">
+        <i class="fas fa-music"></i>
+    </div>
+    
+    <!-- 背景音乐 -->
+    <audio id="bg-music" loop>
+        <source src="https://music.163.com/song/media/outer/url?id=1824045033.mp3" type="audio/mpeg">
+    </audio>
+    
     <script>
-        // 打手数据
+        // 打手数据 (价格调低，段位调低)
         const playersData = [
             {
                 id: 1,
                 name: "冷锋",
                 avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-                rank: "conqueror",
-                kd: 8.5,
+                rank: "diamond",
+                kd: 4.2,
                 position: "狙击手",
-                price: 50,
-                unit: "局",
+                price: 15,
+                unit: "小时",
                 status: "online",
-                tags: ["vip", "hot"],
-                description: "职业选手出身，擅长远程狙击，一枪一个小朋友",
+                tags: ["hot"],
+                description: "擅长远程狙击，耐心教学，适合新手",
                 contact: "VX: lf123",
-                group: "high"
+                group: "high",
+                voice: "青叔音"
             },
             {
                 id: 2,
                 name: "雪梨",
                 avatar: "https://randomuser.me/api/portraits/women/44.jpg",
-                rank: "ace",
-                stars: 6,
-                kd: 6.2,
+                rank: "platinum",
+                kd: 3.5,
                 position: "指挥位",
-                price: 40,
-                unit: "局",
-                status: "busy",
+                price: 12,
+                unit: "小时",
+                status: "online",
                 tags: ["vip"],
-                description: "战术大师，团队核心，带你吃鸡不是梦",
+                description: "战术指导，团队配合，带你了解游戏机制",
                 contact: "QQ: 112233",
-                group: "high"
+                group: "high",
+                voice: "少女音"
             },
             {
                 id: 3,
                 name: "夜枭",
                 avatar: "https://randomuser.me/api/portraits/men/22.jpg",
-                rank: "conqueror",
-                kd: 9.0,
+                rank: "gold",
+                kd: 3.0,
                 position: "突击手",
-                price: 60,
-                unit: "局",
-                status: "online",
-                tags: ["hot"],
-                description: "近战王者，刚枪无敌，决赛圈杀手",
-                contact: "TG: @yx666",
-                group: "high"
+                price: 10,
+                unit: "小时",
+                status: "busy",
+                description: "近战教学，刚枪技巧，提升你的生存能力",
+                contact: "VX: yx666",
+                group: "high",
+                voice: "青叔音"
             },
             {
                 id: 4,
                 name: "小熊",
                 avatar: "https://randomuser.me/api/portraits/women/63.jpg",
-                rank: "crown",
-                stars: 2,
-                kd: 4.5,
+                rank: "silver",
+                kd: 2.5,
                 weapons: "M416+98K",
-                price: 30,
+                price: 8,
                 unit: "小时",
                 status: "online",
-                voice: "少女音",
-                description: "可爱又强力，98K精准爆头，M416稳如老狗",
+                voice: "萝莉音",
+                description: "娱乐为主，开心游戏，适合放松心情",
                 contact: "VX: xiong123",
                 group: "mid"
             },
@@ -671,15 +663,14 @@
                 id: 5,
                 name: "阿杰",
                 avatar: "https://randomuser.me/api/portraits/men/45.jpg",
-                rank: "diamond",
-                stars: 1,
-                kd: 3.8,
+                rank: "bronze",
+                kd: 2.0,
                 weapons: "AKM+UMP",
-                price: 25,
+                price: 5,
                 unit: "小时",
                 status: "online",
                 voice: "青叔音",
-                description: "AKM压枪稳，UMP近战强，耐心教学",
+                description: "新手陪练，基础教学，从零开始带你玩",
                 contact: "QQ: 334455",
                 group: "mid"
             },
@@ -688,9 +679,9 @@
                 name: "奶糖",
                 avatar: "https://randomuser.me/api/portraits/women/28.jpg",
                 rank: "gold",
-                kd: 2.1,
+                kd: 1.8,
                 specialty: "搞笑整活",
-                price: 20,
+                price: 6,
                 unit: "小时",
                 status: "online",
                 voice: "萝莉音",
@@ -702,10 +693,10 @@
                 id: 7,
                 name: "老K",
                 avatar: "https://randomuser.me/api/portraits/men/55.jpg",
-                rank: "platinum",
-                kd: 2.5,
+                rank: "silver",
+                kd: 1.5,
                 specialty: "相声陪玩",
-                price: 15,
+                price: 5,
                 unit: "小时",
                 status: "busy",
                 voice: "大叔音",
@@ -715,18 +706,18 @@
             },
             {
                 id: 8,
-                name: "幽灵",
-                avatar: "https://randomuser.me/api/portraits/men/29.jpg",
-                rank: "conqueror",
-                kd: 7.8,
-                position: "全能选手",
-                price: 55,
-                unit: "局",
+                name: "小萌",
+                avatar: "https://randomuser.me/api/portraits/women/19.jpg",
+                rank: "bronze",
+                kd: 1.2,
+                specialty: "新手陪玩",
+                price: 4,
+                unit: "小时",
                 status: "online",
-                tags: ["vip"],
-                description: "全能型选手，任何位置都能胜任，稳定上分",
-                contact: "VX: youling666",
-                group: "high"
+                voice: "萌妹音",
+                description: "新手友好，一起探索游戏乐趣",
+                contact: "VX: xmeng123",
+                group: "fun"
             }
         ];
         
@@ -758,6 +749,14 @@
         document.addEventListener('DOMContentLoaded', function() {
             renderPlayers(playersData);
             setupEventListeners();
+            
+            // 随机切换一些打手状态（模拟实时状态）
+            setInterval(() => {
+                const randomIndex = Math.floor(Math.random() * playersData.length);
+                const statuses = ['online', 'busy'];
+                playersData[randomIndex].status = statuses[Math.floor(Math.random() * statuses.length)];
+                filterPlayers();
+            }, 10000);
         });
         
         // 渲染玩家卡片
@@ -789,40 +788,13 @@
                                 ${player.name}
                                 ${player.tags && player.tags.includes('vip') ? '<span class="badge badge-vip">VIP</span>' : ''}
                             </div>
-                            <div class="player-id">ID: ${player.contact.split(':')[0]}</div>
+                            <div class="player-id">${player.contact}</div>
                         </div>
                         <div class="player-status ${'status-' + player.status}">
                             ${player.status === 'online' ? '在线' : player.status === 'busy' ? '忙碌' : '离线'}
                         </div>
                     </div>
                     <div class="player-body">
-                `;
-                
-                if (player.group === 'high' || player.group === 'mid') {
-                    cardHTML += `
-                        <div class="player-stats">
-                            <div class="stat-item">
-                                <div class="stat-label">段位</div>
-                                <div class="stat-value">
-                                    ${rankIcons[player.rank]} ${rankNames[player.rank]}${player.stars ? ` ${player.stars}星` : ''}
-                                </div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">KD</div>
-                                <div class="stat-value">${player.kd}</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">${player.group === 'high' ? '位置' : '擅长枪械'}</div>
-                                <div class="stat-value">${player.position || player.weapons}</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-label">${player.group === 'high' ? '单价' : '语音'}</div>
-                                <div class="stat-value">${player.group === 'high' ? `¥${player.price}/${player.unit}` : player.voice}</div>
-                            </div>
-                        </div>
-                    `;
-                } else {
-                    cardHTML += `
                         <div class="player-stats">
                             <div class="stat-item">
                                 <div class="stat-label">段位</div>
@@ -835,18 +807,14 @@
                                 <div class="stat-value">${player.kd}</div>
                             </div>
                             <div class="stat-item">
-                                <div class="stat-label">特色</div>
-                                <div class="stat-value">${player.specialty}</div>
+                                <div class="stat-label">${player.group === 'fun' ? '特色' : '擅长'}</div>
+                                <div class="stat-value">${player.position || player.weapons || player.specialty}</div>
                             </div>
                             <div class="stat-item">
                                 <div class="stat-label">语音</div>
-                                <div class="stat-value">${player.voice}</div>
+                                <div class="stat-value">${player.voice || '无要求'}</div>
                             </div>
                         </div>
-                    `;
-                }
-                
-                cardHTML += `
                         <div class="player-desc">${player.description}</div>
                         ${player.tags ? '<div class="player-tags">' + player.tags.map(tag => 
                             `<span class="player-tag ${tag}">${tag === 'vip' ? 'VIP认证' : tag === 'hot' ? '热门' : ''}</span>`
@@ -854,12 +822,21 @@
                     </div>
                     <div class="player-footer">
                         <div class="player-price">¥${player.price}<span>/${player.unit}</span></div>
-                        <button class="order-btn" data-id="${player.id}">立即下单</button>
+                        <a href="javascript:void(0);" class="contact-btn" onclick="copyContact('${player.contact.replace("'", "\\'")}')">联系打手</a>
                     </div>
                 `;
                 
                 card.innerHTML = cardHTML;
                 container.appendChild(card);
+            });
+        }
+        
+        // 复制联系方式
+        function copyContact(contact) {
+            navigator.clipboard.writeText(contact.split(': ')[1]).then(() => {
+                alert(`已复制联系方式: ${contact}\n请粘贴到微信添加好友`);
+            }).catch(err => {
+                prompt("请手动复制以下联系方式:", contact);
             });
         }
         
@@ -870,8 +847,6 @@
                 tab.addEventListener('click', function() {
                     document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                     this.classList.add('active');
-                    
-                    const tabType = this.dataset.tab;
                     filterPlayers();
                 });
             });
@@ -881,28 +856,47 @@
                 filter.addEventListener('change', filterPlayers);
             });
             
+            // 搜索功能
+            document.getElementById('search-input').addEventListener('input', filterPlayers);
+            
             // 重置按钮
             document.querySelector('.reset-btn').addEventListener('click', function() {
                 document.getElementById('rank-filter').value = 'all';
                 document.getElementById('price-filter').value = 'all';
                 document.getElementById('status-filter').value = 'all';
+                document.getElementById('search-input').value = '';
                 document.querySelector('.tab[data-tab="all"]').click();
                 filterPlayers();
             });
             
-            // 下单按钮
-            document.addEventListener('click', function(e) {
-                if (e.target.classList.contains('order-btn')) {
-                    const playerId = parseInt(e.target.dataset.id);
-                    openOrderModal(playerId);
+            // 音乐控制
+            const musicControl = document.getElementById('music-control');
+            const bgMusic = document.getElementById('bg-music');
+            
+            musicControl.addEventListener('click', function() {
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    musicControl.innerHTML = '<i class="fas fa-pause"></i>';
+                } else {
+                    bgMusic.pause();
+                    musicControl.innerHTML = '<i class="fas fa-music"></i>';
                 }
             });
             
-            // 关闭模态框
-            document.getElementById('close-modal').addEventListener('click', closeOrderModal);
+            // 返回顶部
+            document.getElementById('scroll-top').addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
             
-            // 提交订单
-            document.getElementById('submit-order').addEventListener('click', submitOrder);
+            // 刷新页面
+            document.getElementById('refresh-page').addEventListener('click', function() {
+                location.reload();
+            });
+            
+            // 联系客服
+            document.getElementById('contact-service').addEventListener('click', function() {
+                copyContact('客服微信: peiwan888');
+            });
         }
         
         // 筛选玩家
@@ -911,6 +905,7 @@
             const priceFilter = document.getElementById('price-filter').value;
             const statusFilter = document.getElementById('status-filter').value;
             const tabFilter = document.querySelector('.tab.active').dataset.tab;
+            const searchText = document.getElementById('search-input').value.toLowerCase();
             
             let filteredPlayers = playersData.filter(player => {
                 // 标签筛选
@@ -921,61 +916,32 @@
                 
                 // 价格筛选
                 if (priceFilter !== 'all') {
-                    const [min, max] = priceFilter === '60+' ? [60, Infinity] : priceFilter.split('-').map(Number);
+                    const [min, max] = priceFilter === '30+' ? [30, Infinity] : priceFilter.split('-').map(Number);
                     if (player.price < min || player.price > max) return false;
                 }
                 
                 // 状态筛选
                 if (statusFilter !== 'all' && player.status !== statusFilter) return false;
                 
+                // 搜索筛选
+                if (searchText) {
+                    const searchFields = [
+                        player.name,
+                        rankNames[player.rank],
+                        player.position || '',
+                        player.weapons || '',
+                        player.specialty || '',
+                        player.description,
+                        player.contact
+                    ].join(' ').toLowerCase();
+                    
+                    if (!searchFields.includes(searchText)) return false;
+                }
+                
                 return true;
             });
             
             renderPlayers(filteredPlayers);
-        }
-        
-        // 打开下单模态框
-        function openOrderModal(playerId) {
-            const player = playersData.find(p => p.id === playerId);
-            if (!player) return;
-            
-            document.getElementById('order-modal').classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // 可以在这里预填充一些信息
-            document.querySelector('.modal-title').textContent = `下单: ${player.name}`;
-        }
-        
-        // 关闭下单模态框
-        function closeOrderModal() {
-            document.getElementById('order-modal').classList.remove('active');
-            document.body.style.overflow = 'auto';
-        }
-        
-        // 提交订单
-        function submitOrder() {
-            const gameId = document.getElementById('game-id').value.trim();
-            const currentRank = document.getElementById('current-rank').value;
-            const serviceType = document.getElementById('service-type').value;
-            const hours = document.getElementById('hours').value;
-            const specialRequest = document.getElementById('special-request').value.trim();
-            const contact = document.getElementById('contact').value.trim();
-            
-            if (!gameId || !contact) {
-                alert('请填写游戏ID和联系方式');
-                return;
-            }
-            
-            // 这里应该是发送到服务器的逻辑
-            // 模拟成功下单
-            alert('下单成功！客服将很快联系您确认订单详情');
-            closeOrderModal();
-            
-            // 清空表单
-            document.getElementById('game-id').value = '';
-            document.getElementById('special-request').value = '';
-            document.getElementById('contact').value = '';
-            document.getElementById('hours').value = '1';
         }
     </script>
 </body>
