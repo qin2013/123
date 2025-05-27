@@ -1,628 +1,865 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>太空射击 - 横竖屏自由切换</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>逸云游戏 - 创造非凡游戏体验</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background-color: #000;
-            touch-action: none;
-            -webkit-touch-callout: none;
-            -webkit-user-select: none;
-            -khtml-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
+        /* 全局样式 */
+        :root {
+            --primary-color: #6c5ce7;
+            --secondary-color: #a29bfe;
+            --dark-color: #2d3436;
+            --light-color: #f5f6fa;
+            --accent-color: #fd79a8;
+            --text-color: #333;
+            --text-light: #636e72;
         }
         
-        #gameContainer {
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary-color);
+            transition: all 0.3s ease;
+        }
+        
+        a:hover {
+            color: var(--accent-color);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-accent {
+            background: var(--accent-color);
+        }
+        
+        .btn-accent:hover {
+            background: #e84393;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+            font-size: 2.5rem;
+            color: var(--dark-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary-color);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+        
+        /* 导航栏 */
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: fixed;
+            width: 100%;
             top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .header-scrolled {
+            background-color: rgba(255, 255, 255, 0.95);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+        }
+        
+        nav {
             display: flex;
-            justify-content: center;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
             align-items: center;
         }
         
-        #gameCanvas {
-            background-color: #111;
+        .logo i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--dark-color);
+            font-weight: 600;
+            position: relative;
+        }
+        
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent-color);
+            bottom: -5px;
+            left: 0;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background: var(--dark-color);
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        /* 英雄区域 */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+            color: white;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            padding-top: 80px;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInDown 1s ease;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-btns {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            animation: fadeIn 1.5s ease;
+        }
+        
+        /* 关于我们 */
+        .about {
+            background-color: white;
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+        }
+        
+        .about-img {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .about-img img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s ease;
+        }
+        
+        .about-img:hover img {
+            transform: scale(1.05);
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .about-text p {
+            margin-bottom: 15px;
+            color: var(--text-light);
+        }
+        
+        .stats {
+            display: flex;
+            margin-top: 30px;
+            gap: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-item h4 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stat-item p {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+        
+        /* 游戏开发中 */
+        .developing {
+            background-color: var(--light-color);
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .developing-content i {
+            font-size: 5rem;
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        
+        .developing-content h2 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .developing-content p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 700px;
+            margin: 0 auto 30px;
+        }
+        
+        /* 团队成员 */
+        .team {
+            background-color: white;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .member-card {
+            background: var(--light-color);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .member-img {
+            height: 250px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .member-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .member-social {
+            position: absolute;
+            bottom: -50px;
+            left: 0;
+            width: 100%;
+            background: rgba(108, 92, 231, 0.8);
+            padding: 15px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .member-card:hover .member-social {
+            bottom: 0;
+        }
+        
+        .member-social a {
+            color: white;
+            margin: 0 10px;
+            font-size: 1.2rem;
+        }
+        
+        .member-info {
+            padding: 20px;
+        }
+        
+        .member-info h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+            color: var(--dark-color);
+        }
+        
+        .member-info p {
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .member-info .bio {
+            color: var(--text-light);
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+        
+        /* 联系我们 */
+        .contact {
+            background-color: white;
+            text-align: center;
+        }
+        
+        .contact-info {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .contact-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--dark-color);
+        }
+        
+        .contact-info p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 50px;
+            height: 50px;
+            background: var(--light-color);
+            border-radius: 50%;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-5px);
+        }
+        
+        /* 页脚 */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--primary-color);
+        }
+        
+        .footer-col p {
+            color: #b2b2b2;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+            list-style: none;
+        }
+        
+        .footer-links a {
+            color: #b2b2b2;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
             display: block;
         }
         
-        #orientationBtn {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            padding: 10px 15px;
-            background-color: rgba(0, 150, 255, 0.7);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            z-index: 100;
-            touch-action: manipulation;
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
         }
         
-        #scoreDisplay {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            color: white;
-            font-size: 20px;
-            font-family: Arial, sans-serif;
-            z-index: 100;
-            text-shadow: 0 0 5px #000;
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #b2b2b2;
+            font-size: 0.8rem;
         }
         
-        #controls {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            z-index: 100;
+        /* 动画 */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
         
-        .control-btn {
-            width: 60px;
-            height: 60px;
-            background-color: rgba(255, 255, 255, 0.2);
-            border: 2px solid rgba(255, 255, 255, 0.5);
-            border-radius: 50%;
-            color: white;
-            font-size: 24px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            touch-action: manipulation;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        .control-row {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
-        #fireBtn {
-            background-color: rgba(255, 50, 50, 0.7);
-            border-color: rgba(255, 255, 255, 0.8);
+        /* 响应式设计 */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-img, .about-text {
+                flex: none;
+                width: 100%;
+            }
+            
+            .about-img {
+                margin-bottom: 30px;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
         }
         
-        #orientationWarning {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            color: white;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            display: none;
+        @media (max-width: 768px) {
+            .nav-links {
+                position: absolute;
+                right: 0;
+                top: 80px;
+                background: white;
+                width: 100%;
+                flex-direction: column;
+                align-items: center;
+                padding: 20px 0;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                clip-path: circle(0px at 90% -10%);
+                transition: all 0.5s ease-out;
+            }
+            
+            .nav-links.active {
+                clip-path: circle(1000px at 90% -10%);
+            }
+            
+            .nav-links li {
+                margin: 15px 0;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <div id="gameContainer">
-        <canvas id="gameCanvas"></canvas>
-    </div>
-    <div id="scoreDisplay">分数: 0</div>
-    <button id="orientationBtn">切换横竖屏</button>
-    
-    <div id="controls">
-        <div class="control-row">
-            <div class="control-btn" id="upBtn">↑</div>
+    <!-- 导航栏 -->
+    <header id="header">
+        <div class="container">
+            <nav>
+                <a href="#" class="logo"><i class="fas fa-cloud"></i>逸云游戏</a>
+                <ul class="nav-links">
+                    <li><a href="#home">首页</a></li>
+                    <li><a href="#about">关于我们</a></li>
+                    <li><a href="#team">团队</a></li>
+                    <li><a href="#contact">联系我们</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </nav>
         </div>
-        <div class="control-row">
-            <div class="control-btn" id="leftBtn">←</div>
-            <div class="control-btn" id="downBtn">↓</div>
-            <div class="control-btn" id="rightBtn">→</div>
+    </header>
+
+    <!-- 英雄区域 -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <h1>创造非凡的游戏体验</h1>
+                <p>逸云游戏工作室致力于开发高质量、创新性的游戏作品，为玩家带来独特的娱乐体验。我们的团队由一群充满激情的游戏开发者组成，专注于创造令人难忘的游戏世界。</p>
+                <div class="hero-btns">
+                    <a href="#about" class="btn">了解更多</a>
+                    <a href="#contact" class="btn btn-accent">关注我们</a>
+                </div>
+            </div>
         </div>
-        <div class="control-row">
-            <div class="control-btn" id="fireBtn">发射</div>
+    </section>
+
+    <!-- 关于我们 -->
+    <section class="section about" id="about">
+        <div class="container">
+            <h2 class="section-title">关于我们</h2>
+            <div class="about-content">
+                <div class="about-img">
+                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="逸云游戏工作室">
+                </div>
+                <div class="about-text">
+                    <h3>我们是谁</h3>
+                    <p>逸云游戏工作室成立于2025年1月6日，是一家专注于高品质游戏开发的新锐工作室。我们相信游戏不仅是娱乐，更是一种艺术形式和情感表达的媒介。</p>
+                    <p>我们的使命是通过创新的游戏设计和精湛的技术实现，为全球玩家带来独特而深刻的游戏体验。每一款游戏都是我们团队心血的结晶，我们致力于在每一个细节上都做到最好。</p>
+                    <div class="stats">
+                        <div class="stat-item">
+                            <h4>0+</h4>
+                            <p>年经验</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>0+</h4>
+                            <p>款游戏</p>
+                        </div>
+                        <div class="stat-item">
+                            <h4>陆续邀请中</h4>
+                            <p>玩家</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    
-    <div id="orientationWarning">
-        <h2>请旋转您的设备</h2>
-        <p>您的浏览器不支持直接切换方向</p>
-        <p>请手动旋转设备到您想要的方向</p>
-        <button id="continueBtn" style="margin-top: 20px; padding: 10px 20px; background-color: #0096ff; color: white; border: none; border-radius: 5px;">继续游戏</button>
-    </div>
-    
+    </section>
+
+    <!-- 游戏开发中 -->
+    <section class="section developing" id="developing">
+        <div class="container">
+            <div class="developing-content">
+                <i class="fas fa-gamepad"></i>
+                <h2>游戏开发中</h2>
+                <p>我们正在全力开发我们的首款游戏作品，这是一款充满创意和独特体验的游戏。请持续关注我们的最新进展。</p>
+                <a href="#contact" class="btn">获取更新</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 团队成员 -->
+    <section class="section team" id="team">
+        <div class="container">
+            <h2 class="section-title">我们的团队</h2>
+            <div class="team-grid">
+                <!-- 成员1 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="张云">
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>张云</h3>
+                        <p>创始人 & 创意总监</p>
+                        <p class="bio">游戏行业资深人士，对游戏设计有独到见解，致力于创造独特的游戏体验。</p>
+                    </div>
+                </div>
+                
+                <!-- 成员2 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="李逸">
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>李逸</h3>
+                        <p>技术总监</p>
+                        <p class="bio">游戏引擎专家，精通多种编程语言和技术架构，负责团队技术路线规划。</p>
+                    </div>
+                </div>
+                
+                <!-- 成员3 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="王梦">
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>王梦</h3>
+                        <p>美术总监</p>
+                        <p class="bio">概念艺术家出身，擅长创造独特的视觉风格，为游戏注入灵魂。</p>
+                    </div>
+                </div>
+                
+                <!-- 成员4 -->
+                <div class="member-card">
+                    <div class="member-img">
+                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="陈风">
+                        <div class="member-social">
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-linkedin"></i></a>
+                            <a href="#"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                    <div class="member-info">
+                        <h3>陈风</h3>
+                        <p>音效设计师</p>
+                        <p class="bio">音乐制作人转型，擅长创造沉浸式的音效体验，为游戏增添情感层次。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系我们 -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <h2 class="section-title">关注我们</h2>
+            <div class="contact-info">
+                <h3>获取最新资讯</h3>
+                <p>关注我们的社交媒体账号，获取工作室最新动态和游戏开发进展。</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-weibo"></i></a>
+                    <a href="#"><i class="fab fa-weixin"></i></a>
+                    <a href="#"><i class="fab fa-bilibili"></i></a>
+                    <a href="#"><i class="fab fa-qq"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-col">
+                    <h3>关于逸云</h3>
+                    <p>逸云游戏工作室成立于2025年，致力于创造独特而深刻的游戏体验，为玩家带来非凡的娱乐享受。</p>
+                </div>
+                <div class="footer-col">
+                    <h3>快速链接</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">首页</a></li>
+                        <li><a href="#about">关于我们</a></li>
+                        <li><a href="#team">团队</a></li>
+                        <li><a href="#contact">关注我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>加入我们</h3>
+                    <p>我们正在寻找有才华的游戏开发者加入我们的团队。如果你对游戏开发充满热情，欢迎联系我们。</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 逸云游戏工作室. 保留所有权利.</p>
+            </div>
+        </div>
+    </footer>
+
     <script>
-        // 游戏状态
-        const gameState = {
-            score: 0,
-            isPortrait: true,
-            gameWidth: window.innerWidth,
-            gameHeight: window.innerHeight,
-            player: {
-                x: 0,
-                y: 0,
-                width: 40,
-                height: 40,
-                speed: 5,
-                color: '#00a8ff',
-                lives: 3
-            },
-            bullets: [],
-            enemies: [],
-            lastEnemyTime: 0,
-            enemyInterval: 1000,
-            keys: {},
-            touch: null,
-            lastBulletTime: 0,
-            gameOver: false,
-            particles: [],
-            stars: [],
-            orientationLocked: false
-        };
-
-        // 初始化星星背景
-        function initStars() {
-            gameState.stars = [];
-            const starCount = Math.floor((gameState.gameWidth * gameState.gameHeight) / 1000);
-            
-            for (let i = 0; i < starCount; i++) {
-                gameState.stars.push({
-                    x: Math.random() * gameState.gameWidth,
-                    y: Math.random() * gameState.gameHeight,
-                    size: Math.random() * 2 + 1,
-                    speed: Math.random() * 0.5 + 0.1
-                });
-            }
-        }
-
-        // 初始化游戏
-        function initGame() {
-            const canvas = document.getElementById('gameCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // 设置初始方向
-            checkOrientation();
-            
-            // 初始化星星
-            initStars();
-            
-            // 设置玩家初始位置
-            resetPlayerPosition();
-            
-            // 事件监听
-            window.addEventListener('resize', handleResize);
-            document.addEventListener('keydown', handleKeyDown);
-            document.addEventListener('keyup', handleKeyUp);
-            canvas.addEventListener('touchstart', handleTouchStart, { passive: false });
-            canvas.addEventListener('touchmove', handleTouchMove, { passive: false });
-            canvas.addEventListener('touchend', handleTouchEnd, { passive: false });
-            
-            // 切换按钮事件
-            document.getElementById('orientationBtn').addEventListener('click', toggleOrientation);
-            document.getElementById('continueBtn').addEventListener('click', hideOrientationWarning);
-            
-            // 触摸控制按钮
-            setupTouchControls();
-            
-            // 监听设备方向变化
-            window.addEventListener('orientationchange', handleOrientationChange);
-            
-            // 开始游戏循环
-            gameLoop();
-        }
-
-        // 设置触摸控制按钮
-        function setupTouchControls() {
-            document.getElementById('upBtn').addEventListener('touchstart', () => gameState.keys.ArrowUp = true);
-            document.getElementById('upBtn').addEventListener('touchend', () => gameState.keys.ArrowUp = false);
-            document.getElementById('leftBtn').addEventListener('touchstart', () => gameState.keys.ArrowLeft = true);
-            document.getElementById('leftBtn').addEventListener('touchend', () => gameState.keys.ArrowLeft = false);
-            document.getElementById('downBtn').addEventListener('touchstart', () => gameState.keys.ArrowDown = true);
-            document.getElementById('downBtn').addEventListener('touchend', () => gameState.keys.ArrowDown = false);
-            document.getElementById('rightBtn').addEventListener('touchstart', () => gameState.keys.ArrowRight = true);
-            document.getElementById('rightBtn').addEventListener('touchend', () => gameState.keys.ArrowRight = false);
-            document.getElementById('fireBtn').addEventListener('touchstart', () => gameState.keys[' '] = true);
-            document.getElementById('fireBtn').addEventListener('touchend', () => gameState.keys[' '] = false);
-        }
-
-        // 游戏主循环
-        function gameLoop() {
-            const canvas = document.getElementById('gameCanvas');
-            const ctx = canvas.getContext('2d');
-            
-            // 清除画布
-            ctx.fillStyle = '#111';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // 绘制星星背景
-            drawStars(ctx);
-            
-            // 更新游戏状态
-            if (!gameState.gameOver) {
-                updateGame();
-            }
-            
-            // 绘制游戏元素
-            drawGame(ctx);
-            
-            // 绘制粒子效果
-            drawParticles(ctx);
-            
-            // 更新分数显示
-            document.getElementById('scoreDisplay').textContent = `分数: ${gameState.score} 生命: ${gameState.player.lives}`;
-            
-            // 继续循环
-            requestAnimationFrame(gameLoop);
-        }
-
-        // 绘制星星背景
-        function drawStars(ctx) {
-            ctx.fillStyle = 'white';
-            gameState.stars.forEach(star => {
-                ctx.fillRect(star.x, star.y, star.size, star.size);
-                
-                // 移动星星
-                star.y += star.speed;
-                
-                // 如果星星移出屏幕，重新放置到顶部
-                if (star.y > gameState.gameHeight) {
-                    star.y = 0;
-                    star.x = Math.random() * gameState.gameWidth;
-                }
-            });
-        }
-
-        // 更新游戏状态
-        function updateGame() {
-            // 移动玩家
-            if (gameState.keys.ArrowLeft || gameState.keys.a) {
-                gameState.player.x = Math.max(0, gameState.player.x - gameState.player.speed);
-            }
-            if (gameState.keys.ArrowRight || gameState.keys.d) {
-                gameState.player.x = Math.min(gameState.gameWidth - gameState.player.width, gameState.player.x + gameState.player.speed);
-            }
-            if (gameState.keys.ArrowUp || gameState.keys.w) {
-                gameState.player.y = Math.max(0, gameState.player.y - gameState.player.speed);
-            }
-            if (gameState.keys.ArrowDown || gameState.keys.s) {
-                gameState.player.y = Math.min(gameState.gameHeight - gameState.player.height, gameState.player.y + gameState.player.speed);
-            }
-            
-            // 触摸控制
-            if (gameState.touch) {
-                const touchX = gameState.touch.clientX - gameState.player.width / 2;
-                const touchY = gameState.touch.clientY - gameState.player.height / 2;
-                
-                gameState.player.x = Math.max(0, Math.min(gameState.gameWidth - gameState.player.width, touchX));
-                gameState.player.y = Math.max(0, Math.min(gameState.gameHeight - gameState.player.height, touchY));
-            }
-            
-            // 发射子弹 (空格键)
-            if (gameState.keys[' ']) {
-                const now = Date.now();
-                if (!gameState.lastBulletTime || now - gameState.lastBulletTime > 300) {
-                    gameState.bullets.push({
-                        x: gameState.player.x + gameState.player.width / 2 - 3,
-                        y: gameState.player.y,
-                        width: 6,
-                        height: 15,
-                        speed: 10,
-                        color: '#fbc531'
-                    });
-                    gameState.lastBulletTime = now;
-                }
-            }
-            
-            // 更新子弹位置
-            for (let i = gameState.bullets.length - 1; i >= 0; i--) {
-                gameState.bullets[i].y -= gameState.bullets[i].speed;
-                
-                // 移除超出屏幕的子弹
-                if (gameState.bullets[i].y < 0) {
-                    gameState.bullets.splice(i, 1);
-                }
-            }
-            
-            // 生成敌人
-            const now = Date.now();
-            if (now - gameState.lastEnemyTime > gameState.enemyInterval) {
-                const size = Math.random() * 30 + 20;
-                gameState.enemies.push({
-                    x: Math.random() * (gameState.gameWidth - size),
-                    y: -size,
-                    width: size,
-                    height: size,
-                    speed: Math.random() * 3 + 2,
-                    color: `hsl(${Math.random() * 360}, 70%, 50%)`,
-                    health: Math.floor(size / 10)
-                });
-                gameState.lastEnemyTime = now;
-                
-                // 随着分数增加，敌人出现更快
-                gameState.enemyInterval = Math.max(200, 1000 - gameState.score * 2);
-            }
-            
-            // 更新敌人位置
-            for (let i = gameState.enemies.length - 1; i >= 0; i--) {
-                gameState.enemies[i].y += gameState.enemies[i].speed;
-                
-                // 移除超出屏幕的敌人
-                if (gameState.enemies[i].y > gameState.gameHeight) {
-                    gameState.enemies.splice(i, 1);
-                }
-            }
-            
-            // 检测碰撞
-            checkCollisions();
-            
-            // 更新粒子
-            updateParticles();
-        }
-
-        // 绘制游戏元素
-        function drawGame(ctx) {
-            // 绘制玩家
-            ctx.fillStyle = gameState.player.color;
-            ctx.fillRect(gameState.player.x, gameState.player.y, gameState.player.width, gameState.player.height);
-            
-            // 绘制子弹
-            ctx.fillStyle = '#fbc531';
-            gameState.bullets.forEach(bullet => {
-                ctx.fillRect(bullet.x, bullet.y, bullet.width, bullet.height);
-            });
-            
-            // 绘制敌人
-            gameState.enemies.forEach(enemy => {
-                ctx.fillStyle = enemy.color;
-                ctx.fillRect(enemy.x, enemy.y, enemy.width, enemy.height);
-            });
-        }
-
-        // 创建粒子效果
-        function createParticles(x, y, color, count) {
-            for (let i = 0; i < count; i++) {
-                gameState.particles.push({
-                    x: x,
-                    y: y,
-                    size: Math.random() * 4 + 2,
-                    color: color,
-                    speedX: Math.random() * 6 - 3,
-                    speedY: Math.random() * 6 - 3,
-                    life: Math.random() * 30 + 20
-                });
-            }
-        }
-
-        // 更新粒子
-        function updateParticles() {
-            for (let i = gameState.particles.length - 1; i >= 0; i--) {
-                const p = gameState.particles[i];
-                p.x += p.speedX;
-                p.y += p.speedY;
-                p.life--;
-                
-                if (p.life <= 0) {
-                    gameState.particles.splice(i, 1);
-                }
-            }
-        }
-
-        // 绘制粒子
-        function drawParticles(ctx) {
-            gameState.particles.forEach(p => {
-                ctx.fillStyle = p.color;
-                ctx.globalAlpha = p.life / 50;
-                ctx.fillRect(p.x, p.y, p.size, p.size);
-            });
-            ctx.globalAlpha = 1;
-        }
-
-        // 检测碰撞
-        function checkCollisions() {
-            // 子弹与敌人碰撞
-            for (let i = gameState.bullets.length - 1; i >= 0; i--) {
-                const bullet = gameState.bullets[i];
-                
-                for (let j = gameState.enemies.length - 1; j >= 0; j--) {
-                    const enemy = gameState.enemies[j];
-                    
-                    if (
-                        bullet.x < enemy.x + enemy.width &&
-                        bullet.x + bullet.width > enemy.x &&
-                        bullet.y < enemy.y + enemy.height &&
-                        bullet.y + bullet.height > enemy.y
-                    ) {
-                        // 碰撞发生
-                        gameState.bullets.splice(i, 1);
-                        enemy.health--;
-                        
-                        // 创建爆炸粒子
-                        createParticles(
-                            enemy.x + enemy.width / 2,
-                            enemy.y + enemy.height / 2,
-                            enemy.color,
-                            10
-                        );
-                        
-                        if (enemy.health <= 0) {
-                            // 敌人被摧毁
-                            gameState.enemies.splice(j, 1);
-                            gameState.score += 10;
-                            
-                            // 创建更大的爆炸
-                            createParticles(
-                                enemy.x + enemy.width / 2,
-                                enemy.y + enemy.height / 2,
-                                enemy.color,
-                                20
-                            );
-                        }
-                        break;
-                    }
-                }
-            }
-            
-            // 玩家与敌人碰撞
-            for (let i = gameState.enemies.length - 1; i >= 0; i--) {
-                const enemy = gameState.enemies[i];
-                
-                if (
-                    gameState.player.x < enemy.x + enemy.width &&
-                    gameState.player.x + gameState.player.width > enemy.x &&
-                    gameState.player.y < enemy.y + enemy.height &&
-                    gameState.player.y + gameState.player.height > enemy.y
-                ) {
-                    // 碰撞发生
-                    gameState.enemies.splice(i, 1);
-                    gameState.player.lives--;
-                    
-                    // 创建爆炸效果
-                    createParticles(
-                        gameState.player.x + gameState.player.width / 2,
-                        gameState.player.y + gameState.player.height / 2,
-                        gameState.player.color,
-                        30
-                    );
-                    
-                    if (gameState.player.lives <= 0) {
-                        // 游戏结束
-                        gameState.gameOver = true;
-                        setTimeout(() => {
-                            alert(`游戏结束! 你的分数是: ${gameState.score}`);
-                            resetGame();
-                        }, 500);
-                    } else {
-                        // 重置玩家位置
-                        setTimeout(() => {
-                            resetPlayerPosition();
-                        }, 1000);
-                    }
-                    break;
-                }
-            }
-        }
-
-        // 重置玩家位置
-        function resetPlayerPosition() {
-            gameState.player.x = gameState.gameWidth / 2 - gameState.player.width / 2;
-            gameState.player.y = gameState.gameHeight - gameState.player.height - 20;
-        }
-
-        // 重置游戏
-        function resetGame() {
-            gameState.score = 0;
-            gameState.bullets = [];
-            gameState.enemies = [];
-            gameState.lastEnemyTime = 0;
-            gameState.enemyInterval = 1000;
-            gameState.player.lives = 3;
-            gameState.gameOver = false;
-            
-            // 重置玩家位置
-            resetPlayerPosition();
-        }
-
-        // 处理键盘事件
-        function handleKeyDown(e) {
-            gameState.keys[e.key] = true;
-        }
-
-        function handleKeyUp(e) {
-            gameState.keys[e.key] = false;
-        }
-
-        // 处理触摸事件
-        function handleTouchStart(e) {
-            e.preventDefault();
-            gameState.touch = e.touches[0];
-        }
-
-        function handleTouchMove(e) {
-            e.preventDefault();
-            if (e.touches.length > 0) {
-                gameState.touch = e.touches[0];
-            }
-        }
-
-        function handleTouchEnd(e) {
-            e.preventDefault();
-            gameState.touch = null;
-        }
-
-        // 处理窗口大小变化
-        function handleResize() {
-            checkOrientation();
-            resizeCanvas();
-        }
-
-        // 处理设备方向变化
-        function handleOrientationChange() {
-            checkOrientation();
-            resizeCanvas();
-        }
-
-        // 检查当前方向
-        function checkOrientation() {
-            const portrait = window.innerHeight > window.innerWidth;
-            gameState.isPortrait = portrait;
-        }
-
-        // 显示方向切换提示
-        function showOrientationWarning() {
-            document.getElementById('orientationWarning').style.display = 'flex';
-        }
-
-        // 隐藏方向切换提示
-        function hideOrientationWarning() {
-            document.getElementById('orientationWarning').style.display = 'none';
-        }
-
-        // 切换横竖屏
-        function toggleOrientation() {
-            if (screen.orientation && screen.orientation.lock) {
-                const newOrientation = gameState.isPortrait ? 'landscape' : 'portrait';
-                
-                screen.orientation.lock(newOrientation)
-                    .then(() => {
-                        gameState.orientationLocked = true;
-                    })
-                    .catch(err => {
-                        console.log('无法锁定方向:', err);
-                        showOrientationWarning();
-                    });
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('header-scrolled');
             } else {
-                showOrientationWarning();
+                header.classList.remove('header-scrolled');
             }
-        }
+        });
 
-        // 调整画布大小
-        function resizeCanvas() {
-            const canvas = document.getElementById('gameCanvas');
-            gameState.gameWidth = window.innerWidth;
-            gameState.gameHeight = window.innerHeight;
-            
-            canvas.width = gameState.gameWidth;
-            canvas.height = gameState.gameHeight;
-            
-            // 更新玩家位置
-            gameState.player.x = Math.min(gameState.player.x, gameState.gameWidth - gameState.player.width);
-            gameState.player.y = Math.min(gameState.player.y, gameState.gameHeight - gameState.player.height);
-            
-            // 重新初始化星星
-            initStars();
-        }
+        // 移动端菜单切换
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
 
-        // 启动游戏
-        window.onload = initGame;
+        hamburger.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                if (this.classList.contains('no-scroll')) return;
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                    
+                    // 关闭移动端菜单
+                    hamburger.classList.remove('active');
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
     </script>
 </body>
 </html>
