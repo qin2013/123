@@ -124,23 +124,6 @@
             margin-bottom: 10px;
         }
         
-        .player-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: #eee;
-            margin-right: 15px;
-            overflow: hidden;
-            border: 3px solid #fff;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-        }
-        
-        .player-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
         .player-info {
             flex: 1;
         }
@@ -216,6 +199,12 @@
             border-radius: 10px;
             margin: 20px 0;
             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .customer-service.active {
+            display: block;
+            animation: fadeIn 0.5s;
         }
         
         .customer-service h3 {
@@ -276,115 +265,6 @@
             color: white;
         }
         
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            color: var(--dark-color);
-        }
-        
-        input, select, textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
-            transition: border 0.3s;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--primary-color);
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
-        }
-        
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(3px);
-        }
-        
-        .modal-content {
-            background: white;
-            width: 90%;
-            max-width: 450px;
-            padding: 25px;
-            border-radius: 10px;
-            animation: modalFadeIn 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-        
-        @keyframes modalFadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .modal-title {
-            font-size: 20px;
-            font-weight: bold;
-            color: var(--dark-color);
-        }
-        
-        .close-btn {
-            font-size: 24px;
-            cursor: pointer;
-            color: #999;
-            transition: color 0.3s;
-        }
-        
-        .close-btn:hover {
-            color: var(--danger-color);
-        }
-        
-        .submit-btn {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
-            color: white;
-            border: none;
-            padding: 12px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 15px;
-            transition: all 0.3s;
-            font-weight: 500;
-        }
-        
-        .submit-btn:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: 0 3px 10px rgba(110, 142, 251, 0.3);
-        }
-        
         .badge {
             display: inline-block;
             padding: 3px 8px;
@@ -436,11 +316,6 @@
         }
         
         @media (max-width: 480px) {
-            .player-avatar {
-                width: 50px;
-                height: 50px;
-            }
-            
             .player-name {
                 font-size: 16px;
             }
@@ -477,7 +352,7 @@
         </div>
         
         <!-- 客服信息 -->
-        <div class="customer-service">
+        <div id="customerService" class="customer-service">
             <h3><i class="fas fa-headset"></i> 客服联系</h3>
             <div class="qq-item">
                 <i class="fab fa-qq"></i>
@@ -495,6 +370,15 @@
                 </div>
                 <button class="copy-btn" onclick="copyToClipboard('3865849354')">复制</button>
             </div>
+            <div style="margin-top: 15px; padding-top: 10px; border-top: 1px dashed #eee; font-size: 14px;">
+                <p><i class="fas fa-info-circle" style="color: var(--primary-color);"></i> 请添加客服QQ咨询下单，提供以下信息：</p>
+                <ul style="margin-top: 8px; padding-left: 20px;">
+                    <li>您想预约的打手名称</li>
+                    <li>您的游戏ID和区服</li>
+                    <li>需要的服务类型和时长</li>
+                    <li>您的联系方式</li>
+                </ul>
+            </div>
         </div>
         
         <!-- 王者荣耀打手列表 -->
@@ -506,9 +390,6 @@
             <!-- 打手1 -->
             <div class="player-card">
                 <div class="player-header">
-                    <div class="player-avatar">
-                        <img src="https://via.placeholder.com/60/6e8efb/ffffff?text=小灿" alt="青训.小灿">
-                    </div>
                     <div class="player-info">
                         <div class="player-name">
                             青训.小灿
@@ -532,17 +413,14 @@
                         <span>职业青训选手，操作细腻，意识顶尖</span>
                     </div>
                 </div>
-                <button class="order-btn" onclick="openOrderModal('青训.小灿', '王者荣耀')">
-                    <i class="fas fa-shopping-cart"></i> 立即下单
+                <button class="order-btn" onclick="showCustomerService()">
+                    <i class="fas fa-shopping-cart"></i> 联系客服下单
                 </button>
             </div>
             
             <!-- 打手2 -->
             <div class="player-card">
                 <div class="player-header">
-                    <div class="player-avatar">
-                        <img src="https://via.placeholder.com/60/a777e3/ffffff?text=婚纱" alt="唯一婚纱校服">
-                    </div>
                     <div class="player-info">
                         <div class="player-name">
                             唯一婚纱校服
@@ -566,17 +444,14 @@
                         <span>稳定carry，心态好，教学耐心</span>
                     </div>
                 </div>
-                <button class="order-btn" onclick="openOrderModal('唯一婚纱校服', '王者荣耀')">
-                    <i class="fas fa-shopping-cart"></i> 立即下单
+                <button class="order-btn" onclick="showCustomerService()">
+                    <i class="fas fa-shopping-cart"></i> 联系客服下单
                 </button>
             </div>
             
             <!-- 打手3 -->
             <div class="player-card">
                 <div class="player-header">
-                    <div class="player-avatar">
-                        <img src="https://via.placeholder.com/60/fd7e14/ffffff?text=无情" alt="恋无情">
-                    </div>
                     <div class="player-info">
                         <div class="player-name">
                             恋无情
@@ -600,8 +475,8 @@
                         <span>野王带飞，节奏大师，顺风碾压</span>
                     </div>
                 </div>
-                <button class="order-btn" onclick="openOrderModal('恋无情', '王者荣耀')">
-                    <i class="fas fa-shopping-cart"></i> 立即下单
+                <button class="order-btn" onclick="showCustomerService()">
+                    <i class="fas fa-shopping-cart"></i> 联系客服下单
                 </button>
             </div>
         </div>
@@ -615,9 +490,6 @@
             <!-- 打手1 -->
             <div class="player-card">
                 <div class="player-header">
-                    <div class="player-avatar">
-                        <img src="https://via.placeholder.com/60/28a745/ffffff?text=凉心" alt="凉心煮啵">
-                    </div>
                     <div class="player-info">
                         <div class="player-name">
                             凉心煮啵
@@ -641,17 +513,14 @@
                         <span>刚枪王，带队吃鸡率高，物资丰富</span>
                     </div>
                 </div>
-                <button class="order-btn" onclick="openOrderModal('凉心煮啵', '和平精英')">
-                    <i class="fas fa-shopping-cart"></i> 立即下单
+                <button class="order-btn" onclick="showCustomerService()">
+                    <i class="fas fa-shopping-cart"></i> 联系客服下单
                 </button>
             </div>
             
             <!-- 打手2 -->
             <div class="player-card">
                 <div class="player-header">
-                    <div class="player-avatar">
-                        <img src="https://via.placeholder.com/60/dc3545/ffffff?text=小雨" alt="小雨总碎碎念">
-                    </div>
                     <div class="player-info">
                         <div class="player-name">
                             小雨总碎碎念
@@ -675,82 +544,10 @@
                         <span>全能选手，战术丰富，沟通能力强，娱乐陪玩</span>
                     </div>
                 </div>
-                <button class="order-btn" onclick="openOrderModal('小雨总碎碎念', '和平精英')">
-                    <i class="fas fa-shopping-cart"></i> 立即下单
+                <button class="order-btn" onclick="showCustomerService()">
+                    <i class="fas fa-shopping-cart"></i> 联系客服下单
                 </button>
             </div>
-        </div>
-    </div>
-    
-    <!-- 下单模态框 -->
-    <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <div class="modal-title"><i class="fas fa-file-alt"></i> 下单信息</div>
-                <div class="close-btn" onclick="closeModal()">&times;</div>
-            </div>
-            <form id="orderForm">
-                <input type="hidden" id="playerName">
-                <input type="hidden" id="gameType">
-                
-                <div class="form-group">
-                    <label for="customerName"><i class="fas fa-user"></i> 您的称呼</label>
-                    <input type="text" id="customerName" placeholder="请输入您的称呼" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="customerPhone"><i class="fas fa-phone"></i> 联系电话</label>
-                    <input type="tel" id="customerPhone" placeholder="请输入您的手机号码" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="gameId"><i class="fas fa-id-card"></i> 游戏ID</label>
-                    <input type="text" id="gameId" placeholder="请输入您的游戏ID" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="gameArea"><i class="fas fa-server"></i> 游戏区服</label>
-                    <select id="gameArea" required>
-                        <option value="">请选择区服</option>
-                        <option value="QQ区">QQ区</option>
-                        <option value="微信区">微信区</option>
-                        <option value="安卓">安卓</option>
-                        <option value="iOS">iOS</option>
-                        <option value="V区">V区</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="serviceType"><i class="fas fa-concierge-bell"></i> 服务类型</label>
-                    <select id="serviceType" required>
-                        <option value="">请选择服务类型</option>
-                        <option value="排位陪玩">排位陪玩</option>
-                        <option value="段位代练">段位代练</option>
-                        <option value="教学指导">教学指导</option>
-                        <option value="娱乐陪玩">娱乐陪玩</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="serviceTime"><i class="fas fa-clock"></i> 服务时长</label>
-                    <select id="serviceTime" required>
-                        <option value="">请选择时长</option>
-                        <option value="1小时">1小时</option>
-                        <option value="2小时">2小时</option>
-                        <option value="3小时">3小时</option>
-                        <option value="包段位">包段位</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label for="remarks"><i class="fas fa-edit"></i> 备注要求</label>
-                    <textarea id="remarks" rows="3" placeholder="请填写您的特殊要求（如指定英雄、时间段等）"></textarea>
-                </div>
-                
-                <button type="button" class="submit-btn" onclick="submitOrder()">
-                    <i class="fas fa-paper-plane"></i> 提交订单
-                </button>
-            </form>
         </div>
     </div>
     
@@ -775,19 +572,13 @@
             document.getElementById(tabId).classList.add('active');
         }
         
-        // 打开下单模态框
-        function openOrderModal(playerName, gameType) {
-            document.getElementById('playerName').value = playerName;
-            document.getElementById('gameType').value = gameType;
-            document.getElementById('orderModal').style.display = 'flex';
+        // 显示客服信息
+        function showCustomerService() {
+            const customerService = document.getElementById('customerService');
+            customerService.classList.add('active');
             
-            // 自动填充游戏类型到备注
-            document.getElementById('remarks').value = `我想预约${playerName}的${gameType}陪玩服务`;
-        }
-        
-        // 关闭模态框
-        function closeModal() {
-            document.getElementById('orderModal').style.display = 'none';
+            // 滚动到客服信息区域
+            customerService.scrollIntoView({ behavior: 'smooth' });
         }
         
         // 复制QQ号到剪贴板
@@ -800,63 +591,6 @@
             document.body.removeChild(input);
             
             alert(`已复制QQ号: ${text}`);
-        }
-        
-        // 提交订单
-        function submitOrder() {
-            const playerName = document.getElementById('playerName').value;
-            const gameType = document.getElementById('gameType').value;
-            const customerName = document.getElementById('customerName').value;
-            const customerPhone = document.getElementById('customerPhone').value;
-            const gameId = document.getElementById('gameId').value;
-            const gameArea = document.getElementById('gameArea').value;
-            const serviceType = document.getElementById('serviceType').value;
-            const serviceTime = document.getElementById('serviceTime').value;
-            const remarks = document.getElementById('remarks').value;
-            
-            // 验证表单
-            if (!customerName || !customerPhone || !gameId || !gameArea || !serviceType || !serviceTime) {
-                alert('请填写完整信息');
-                return;
-            }
-            
-            // 验证手机号格式
-            const phoneRegex = /^1[3-9]\d{9}$/;
-            if (!phoneRegex.test(customerPhone)) {
-                alert('请输入正确的手机号码');
-                return;
-            }
-            
-            // 这里可以添加AJAX请求将订单数据发送到服务器
-            const orderData = {
-                playerName,
-                gameType,
-                customerName,
-                customerPhone,
-                gameId,
-                gameArea,
-                serviceType,
-                serviceTime,
-                remarks,
-                orderTime: new Date().toLocaleString()
-            };
-            
-            console.log('订单数据:', orderData);
-            
-            // 显示成功提示
-            alert(`订单提交成功！\n\n打手: ${playerName}\n游戏: ${gameType}\n服务: ${serviceType} ${serviceTime}\n\n稍后客服会通过电话或QQ联系您确认订单详情。`);
-            
-            // 重置表单并关闭模态框
-            document.getElementById('orderForm').reset();
-            closeModal();
-        }
-        
-        // 点击模态框外部关闭
-        window.onclick = function(event) {
-            const modal = document.getElementById('orderModal');
-            if (event.target === modal) {
-                closeModal();
-            }
         }
     </script>
 </body>
