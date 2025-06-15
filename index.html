@@ -3,515 +3,332 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>星烁游戏 - 创造非凡游戏体验</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>星烁俱乐部 - 专业游戏陪玩</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* 全局样式 */
         :root {
-            --primary-color: #6c5ce7;
-            --secondary-color: #a29bfe;
-            --dark-color: #2d3436;
-            --light-color: #f5f6fa;
-            --accent-color: #fd79a8;
-            --text-color: #333;
-            --text-light: #636e72;
+            --primary-color: #6e8efb;
+            --secondary-color: #a777e3;
+            --dark-color: #2c3e50;
+            --light-color: #f8f9fa;
+            --success-color: #28a745;
+            --danger-color: #dc3545;
+            --warning-color: #fd7e14;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
         }
         
         body {
-            background-color: var(--light-color);
-            color: var(--text-color);
+            background-color: #f5f5f5;
+            color: #333;
             line-height: 1.6;
         }
         
-        a {
-            text-decoration: none;
-            color: var(--primary-color);
-            transition: all 0.3s ease;
-        }
-        
-        a:hover {
-            color: var(--accent-color);
-        }
-        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            max-width: 100%;
+            padding: 0 15px;
         }
         
-        .btn {
-            display: inline-block;
-            background: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-        }
-        
-        .btn:hover {
-            background: var(--secondary-color);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .btn-accent {
-            background: var(--accent-color);
-        }
-        
-        .btn-accent:hover {
-            background: #e84393;
-        }
-        
-        .section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-            font-size: 2.5rem;
-            color: var(--dark-color);
-            position: relative;
-        }
-        
-        .section-title::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: var(--primary-color);
-            margin: 15px auto;
-            border-radius: 2px;
-        }
-        
-        /* 导航栏 */
         header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 1000;
-            transition: all 0.3s ease;
-        }
-        
-        .header-scrolled {
-            background-color: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-            padding: 10px 0;
-        }
-        
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
             padding: 20px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
         }
         
         .logo {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary-color);
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
+            justify-content: center;
         }
         
         .logo i {
             margin-right: 10px;
-            color: var(--accent-color);
+            font-size: 32px;
         }
         
-        .nav-links {
+        .slogan {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .nav-tabs {
             display: flex;
-            list-style: none;
+            background: white;
+            margin: 20px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .nav-links li {
-            margin-left: 30px;
-        }
-        
-        .nav-links a {
-            color: var(--dark-color);
-            font-weight: 600;
-            position: relative;
-        }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--accent-color);
-            bottom: -5px;
-            left: 0;
-            transition: width 0.3s ease;
-        }
-        
-        .nav-links a:hover::after {
-            width: 100%;
-        }
-        
-        .hamburger {
-            display: none;
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px 0;
             cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
         }
         
-        .hamburger div {
-            width: 25px;
-            height: 3px;
-            background: var(--dark-color);
-            margin: 5px;
-            transition: all 0.3s ease;
-        }
-        
-        /* 英雄区域 */
-        .hero {
-            height: 100vh;
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
+        .tab.active {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            display: flex;
-            align-items: center;
-            text-align: center;
-            padding-top: 80px;
         }
         
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .tab i {
+            margin-right: 5px;
         }
         
-        .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 20px;
-            animation: fadeInDown 1s ease;
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
         }
         
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            animation: fadeInUp 1s ease;
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
         
-        .hero-btns {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            animation: fadeIn 1.5s ease;
-        }
-        
-        /* 关于我们 */
-        .about {
-            background-color: white;
-        }
-        
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 50px;
-        }
-        
-        .about-img {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
-        }
-        
-        .about-img img {
-            width: 100%;
-            height: auto;
+        .tab-content.active {
             display: block;
-            transition: transform 0.5s ease;
         }
         
-        .about-img:hover img {
-            transform: scale(1.05);
-        }
-        
-        .about-text {
-            flex: 1;
-        }
-        
-        .about-text h3 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: var(--dark-color);
-        }
-        
-        .about-text p {
-            margin-bottom: 15px;
-            color: var(--text-light);
-        }
-        
-        .stats {
-            display: flex;
-            margin-top: 30px;
-            gap: 30px;
-        }
-        
-        .stat-item {
-            text-align: center;
-        }
-        
-        .stat-item h4 {
-            font-size: 2.5rem;
-            color: var(--primary-color);
-            margin-bottom: 5px;
-        }
-        
-        .stat-item p {
-            font-size: 0.9rem;
-            color: var(--text-light);
-        }
-        
-        /* 游戏开发中 */
-        .developing {
-            background-color: var(--light-color);
-            text-align: center;
-            padding: 100px 0;
-        }
-        
-        .developing-content i {
-            font-size: 5rem;
-            color: var(--primary-color);
-            margin-bottom: 30px;
-        }
-        
-        .developing-content h2 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
-            color: var(--dark-color);
-        }
-        
-        .developing-content p {
-            font-size: 1.2rem;
-            color: var(--text-light);
-            max-width: 700px;
-            margin: 0 auto 30px;
-        }
-        
-        /* 团队成员 */
-        .team {
-            background-color: white;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 30px;
-        }
-        
-        .member-card {
-            background: var(--light-color);
+        .player-card {
+            background: white;
             border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .player-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .player-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .player-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #eee;
+            margin-right: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: all 0.3s ease;
+            border: 3px solid #fff;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
         
-        .member-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-        }
-        
-        .member-img {
-            height: 250px;
-            overflow: hidden;
-            position: relative;
-        }
-        
-        .member-img img {
+        .player-avatar img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
         
-        .member-social {
-            position: absolute;
-            bottom: -50px;
-            left: 0;
-            width: 100%;
-            background: rgba(108, 92, 231, 0.8);
-            padding: 15px 0;
-            transition: all 0.3s ease;
+        .player-info {
+            flex: 1;
         }
         
-        .member-card:hover .member-social {
-            bottom: 0;
-        }
-        
-        .member-social a {
-            color: white;
-            margin: 0 10px;
-            font-size: 1.2rem;
-        }
-        
-        .member-info {
-            padding: 20px;
-        }
-        
-        .member-info h3 {
-            font-size: 1.2rem;
-            margin-bottom: 5px;
+        .player-name {
+            font-weight: bold;
+            font-size: 18px;
             color: var(--dark-color);
         }
         
-        .member-info p {
-            color: var(--primary-color);
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 10px;
+        .player-id {
+            font-size: 13px;
+            color: #666;
+            margin-top: 3px;
         }
         
-        .member-info .bio {
-            color: var(--text-light);
-            font-size: 0.8rem;
-            font-weight: normal;
+        .player-details {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
         }
         
-        /* 联系我们 */
-        .contact {
-            background-color: white;
-            text-align: center;
-        }
-        
-        .contact-info {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-        
-        .contact-info h3 {
-            font-size: 1.5rem;
-            margin-bottom: 20px;
-            color: var(--dark-color);
-        }
-        
-        .contact-info p {
-            color: var(--text-light);
-            font-size: 1.1rem;
-            margin-bottom: 30px;
-        }
-        
-        .social-links {
+        .detail-item {
+            margin-bottom: 8px;
+            font-size: 14px;
             display: flex;
-            justify-content: center;
-            gap: 15px;
         }
         
-        .social-links a {
+        .detail-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 70px;
+        }
+        
+        .order-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            margin-top: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .order-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(110, 142, 251, 0.3);
+        }
+        
+        .order-btn i {
+            margin-right: 5px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            font-size: 12px;
+            color: #999;
+            margin-top: 30px;
+            background: white;
+            border-top: 1px solid #eee;
+        }
+        
+        .customer-service {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .customer-service h3 {
+            margin-bottom: 10px;
+            color: var(--dark-color);
             display: flex;
             align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: var(--light-color);
-            border-radius: 50%;
+        }
+        
+        .customer-service h3 i {
+            margin-right: 8px;
             color: var(--primary-color);
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
         }
         
-        .social-links a:hover {
+        .qq-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .qq-item:last-child {
+            border-bottom: none;
+        }
+        
+        .qq-item i {
+            margin-right: 10px;
+            color: var(--secondary-color);
+            font-size: 20px;
+        }
+        
+        .qq-info {
+            flex: 1;
+        }
+        
+        .qq-name {
+            font-weight: 500;
+        }
+        
+        .qq-number {
+            font-size: 16px;
+            font-weight: bold;
+            color: var(--dark-color);
+        }
+        
+        .copy-btn {
+            background: var(--light-color);
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .copy-btn:hover {
             background: var(--primary-color);
             color: white;
-            transform: translateY(-5px);
         }
         
-        /* 页脚 */
-        footer {
-            background-color: var(--dark-color);
-            color: white;
-            padding: 60px 0 20px;
-        }
-        
-        .footer-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-        
-        .footer-col h3 {
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 50px;
-            height: 2px;
-            background: var(--primary-color);
-        }
-        
-        .footer-col p {
-            color: #b2b2b2;
-            font-size: 0.9rem;
+        .form-group {
             margin-bottom: 15px;
         }
         
-        .footer-links li {
-            margin-bottom: 10px;
-            list-style: none;
-        }
-        
-        .footer-links a {
-            color: #b2b2b2;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+        label {
             display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--dark-color);
         }
         
-        .footer-links a:hover {
-            color: var(--primary-color);
-            padding-left: 5px;
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: border 0.3s;
         }
         
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #b2b2b2;
-            font-size: 0.8rem;
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(110, 142, 251, 0.2);
         }
         
-        /* 动画 */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(3px);
         }
         
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 450px;
+            padding: 25px;
+            border-radius: 10px;
+            animation: modalFadeIn 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            max-height: 90vh;
+            overflow-y: auto;
         }
         
-        @keyframes fadeInDown {
+        @keyframes modalFadeIn {
             from {
                 opacity: 0;
                 transform: translateY(-20px);
@@ -522,344 +339,525 @@
             }
         }
         
-        /* 响应式设计 */
-        @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .about-img, .about-text {
-                flex: none;
-                width: 100%;
-            }
-            
-            .about-img {
-                margin-bottom: 30px;
-            }
-            
-            .hero h1 {
-                font-size: 2.8rem;
-            }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
         }
         
-        @media (max-width: 768px) {
-            .nav-links {
-                position: absolute;
-                right: 0;
-                top: 80px;
-                background: white;
-                width: 100%;
-                flex-direction: column;
-                align-items: center;
-                padding: 20px 0;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                clip-path: circle(0px at 90% -10%);
-                transition: all 0.5s ease-out;
-            }
-            
-            .nav-links.active {
-                clip-path: circle(1000px at 90% -10%);
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
-            }
-            
-            .hamburger {
-                display: block;
-            }
-            
-            .hamburger.active div:nth-child(1) {
-                transform: rotate(-45deg) translate(-5px, 6px);
-            }
-            
-            .hamburger.active div:nth-child(2) {
-                opacity: 0;
-            }
-            
-            .hamburger.active div:nth-child(3) {
-                transform: rotate(45deg) translate(-5px, -6px);
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1rem;
-            }
-            
-            .hero-btns {
-                flex-direction: column;
-                gap: 10px;
-            }
-            
-            .section-title {
-                font-size: 2rem;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 20px;
-            }
+        .modal-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--dark-color);
         }
         
-        @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 2rem;
+        .close-btn {
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            transition: color 0.3s;
+        }
+        
+        .close-btn:hover {
+            color: var(--danger-color);
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+            margin-top: 15px;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .submit-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(110, 142, 251, 0.3);
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-left: 8px;
+        }
+        
+        .badge-primary {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        .badge-success {
+            background: var(--success-color);
+            color: white;
+        }
+        
+        .badge-warning {
+            background: var(--warning-color);
+            color: white;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        
+        .status-online {
+            background: var(--success-color);
+        }
+        
+        .status-offline {
+            background: #ccc;
+        }
+        
+        .status-busy {
+            background: var(--warning-color);
+        }
+        
+        .price-tag {
+            font-weight: bold;
+            color: var(--secondary-color);
+            font-size: 16px;
+        }
+        
+        @media (max-width: 480px) {
+            .player-avatar {
+                width: 50px;
+                height: 50px;
             }
             
-            .section {
-                padding: 60px 0;
+            .player-name {
+                font-size: 16px;
             }
             
-            .team-grid {
-                grid-template-columns: 1fr;
+            .logo {
+                font-size: 24px;
+            }
+            
+            .logo i {
+                font-size: 28px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- 导航栏 -->
-    <header id="header">
+    <header>
         <div class="container">
-            <nav>
-                <a href="#" class="logo"><i class="fas fa-cloud"></i> 星烁游戏</a>
-                <ul class="nav-links">
-                    <li><a href="#home">首页</a></li>
-                    <li><a href="#about">关于我们</a></li>
-                    <li><a href="#team">团队</a></li>
-                    <li><a href="#contact">联系我们</a></li>
-                </ul>
-                <div class="hamburger">
-                    <div></div>
-                    <div></div>
-                    <div></div>
-                </div>
-            </nav>
+            <div class="logo">
+                <i class="fas fa-crown"></i>
+                星烁俱乐部
+            </div>
+            <div class="slogan">专业游戏陪玩 · 上分首选 · 高效安全</div>
         </div>
     </header>
-
-    <!-- 英雄区域 -->
-    <section class="hero" id="home">
-        <div class="container">
-            <div class="hero-content">
-                <h1>创造非凡的游戏体验</h1>
-                <p>逸云游戏工作室致力于开发高质量、创新性的游戏作品，为玩家带来独特的娱乐体验。我们的团队由一群充满激情的游戏开发者组成，专注于创造令人难忘的游戏世界。</p>
-                <div class="hero-btns">
-                    <a href="#about" class="btn">了解更多</a>
-                    <a href="#contact" class="btn btn-accent">关注我们</a>
-                </div>
+    
+    <div class="container">
+        <div class="nav-tabs">
+            <div class="tab active" onclick="switchTab('honor')">
+                <i class="fas fa-gamepad"></i> 王者荣耀
+            </div>
+            <div class="tab" onclick="switchTab('peace')">
+                <i class="fas fa-gun"></i> 和平精英
             </div>
         </div>
-    </section>
-
-    <!-- 关于我们 -->
-    <section class="section about" id="about">
-        <div class="container">
-            <h2 class="section-title">关于我们</h2>
-            <div class="about-content">
-                <div class="about-img">
-                    <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="逸云游戏工作室">
+        
+        <!-- 客服信息 -->
+        <div class="customer-service">
+            <h3><i class="fas fa-headset"></i> 客服联系</h3>
+            <div class="qq-item">
+                <i class="fab fa-qq"></i>
+                <div class="qq-info">
+                    <div class="qq-name">客服1</div>
+                    <div class="qq-number">3965723380</div>
                 </div>
-                <div class="about-text">
-                    <h3>我们是谁</h3>
-                    <p> 星烁游戏工作室成立于2025年1月6日，是一家专注于高品质游戏开发的新锐工作室。我们相信游戏不仅是娱乐，更是一种艺术形式和情感表达的媒介。</p>
-                    <p>我们的使命是通过创新的游戏设计和精湛的技术实现，为全球玩家带来独特而深刻的游戏体验。每一款游戏都是我们团队心血的结晶，我们致力于在每一个细节上都做到最好。</p>
-                    <div class="stats">
-                        <div class="stat-item">
-                            <h4>0+</h4>
-                            <p>年经验</p>
-                        </div>
-                        <div class="stat-item">
-                            <h4>0+</h4>
-                            <p>款游戏</p>
-                        </div>
-                        <div class="stat-item">
-                            <h4>陆续邀请中</h4>
-                            <p>玩家</p>
-                        </div>
-                    </div>
+                <button class="copy-btn" onclick="copyToClipboard('3965723380')">复制</button>
+            </div>
+            <div class="qq-item">
+                <i class="fab fa-qq"></i>
+                <div class="qq-info">
+                    <div class="qq-name">客服2</div>
+                    <div class="qq-number">3865849354</div>
                 </div>
+                <button class="copy-btn" onclick="copyToClipboard('3865849354')">复制</button>
             </div>
         </div>
-    </section>
-
-    <!-- 游戏开发中 -->
-    <section class="section developing" id="developing">
-        <div class="container">
-            <div class="developing-content">
-                <i class="fas fa-gamepad"></i>
-                <h2>游戏开发中</h2>
-                <p>我们正在全力开发我们的首款游戏作品，这是一款充满创意和独特体验的游戏。请持续关注我们的最新进展。</p>
-                <a href="#contact" class="btn">获取更新</a>
+        
+        <!-- 王者荣耀打手列表 -->
+        <div id="honor" class="tab-content active">
+            <h2 style="margin-bottom: 15px; text-align: center;">
+                <i class="fas fa-gamepad"></i> 王者荣耀打手列表
+            </h2>
+            
+            <!-- 打手1 -->
+            <div class="player-card">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <img src="https://via.placeholder.com/60/6e8efb/ffffff?text=小灿" alt="青训.小灿">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            青训.小灿
+                            <span class="badge badge-primary">荣耀王者</span>
+                            <span class="status-indicator status-online"></span>
+                        </div>
+                        <div class="player-id">最高段位：荣耀王者</div>
+                    </div>
+                </div>
+                <div class="player-details">
+                    <div class="detail-item">
+                        <span class="detail-label">擅长位置:</span> 
+                        <span>发育路、打野、中路</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">擅长英雄:</span> 
+                        <span>大司命、孙尚香、诸葛亮</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特点:</span> 
+                        <span>职业青训选手，操作细腻，意识顶尖</span>
+                    </div>
+                </div>
+                <button class="order-btn" onclick="openOrderModal('青训.小灿', '王者荣耀')">
+                    <i class="fas fa-shopping-cart"></i> 立即下单
+                </button>
+            </div>
+            
+            <!-- 打手2 -->
+            <div class="player-card">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <img src="https://via.placeholder.com/60/a777e3/ffffff?text=婚纱" alt="唯一婚纱校服">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            唯一婚纱校服
+                            <span class="badge badge-success">王者31星</span>
+                            <span class="status-indicator status-online"></span>
+                        </div>
+                        <div class="player-id">最高段位：王者31星</div>
+                    </div>
+                </div>
+                <div class="player-details">
+                    <div class="detail-item">
+                        <span class="detail-label">擅长位置:</span> 
+                        <span>发育路</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">擅长英雄:</span> 
+                        <span>马可波罗、公孙离、孙尚香</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特点:</span> 
+                        <span>稳定carry，心态好，教学耐心</span>
+                    </div>
+                </div>
+                <button class="order-btn" onclick="openOrderModal('唯一婚纱校服', '王者荣耀')">
+                    <i class="fas fa-shopping-cart"></i> 立即下单
+                </button>
+            </div>
+            
+            <!-- 打手3 -->
+            <div class="player-card">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <img src="https://via.placeholder.com/60/fd7e14/ffffff?text=无情" alt="恋无情">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            恋无情
+                            <span class="badge badge-warning">王者</span>
+                            <span class="status-indicator status-busy"></span>
+                        </div>
+                        <div class="player-id">最高段位：王者</div>
+                    </div>
+                </div>
+                <div class="player-details">
+                    <div class="detail-item">
+                        <span class="detail-label">擅长位置:</span> 
+                        <span>打野、对抗路、射手</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">擅长英雄:</span> 
+                        <span>澜、刘备、项羽、吕布、阿离</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特点:</span> 
+                        <span>野王带飞，节奏大师，顺风碾压</span>
+                    </div>
+                </div>
+                <button class="order-btn" onclick="openOrderModal('恋无情', '王者荣耀')">
+                    <i class="fas fa-shopping-cart"></i> 立即下单
+                </button>
             </div>
         </div>
-    </section>
-
-    <!-- 团队成员 -->
-    <section class="section team" id="team">
-        <div class="container">
-            <h2 class="section-title">我们的团队</h2>
-            <div class="team-grid">
-                <!-- 成员1 -->
-                <div class="member-card">
-                    <div class="member-img">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="张云">
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
+        
+        <!-- 和平精英打手列表 -->
+        <div id="peace" class="tab-content">
+            <h2 style="margin-bottom: 15px; text-align: center;">
+                <i class="fas fa-gun"></i> 和平精英打手列表
+            </h2>
+            
+            <!-- 打手1 -->
+            <div class="player-card">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <img src="https://via.placeholder.com/60/28a745/ffffff?text=凉心" alt="凉心煮啵">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            凉心煮啵
+                            <span class="badge badge-primary">王牌7星</span>
+                            <span class="status-indicator status-online"></span>
                         </div>
+                        <div class="player-id">最高段位：王牌7星</div>
                     </div>
-                    <div class="member-info">
-                        <h3>张云</h3>
-                        <p>创始人 & 创意总监</p>
-                        <p class="bio">游戏行业资深人士，对游戏设计有独到见解，致力于创造独特的游戏体验。</p>
+                </div>
+                <div class="player-details">
+                    <div class="detail-item">
+                        <span class="detail-label">擅长模式:</span> 
+                        <span>地铁模式、经典模式</span>
                     </div>
+                    <div class="detail-item">
+                        <span class="detail-label">KD:</span> 
+                        <span>8.5+</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特点:</span> 
+                        <span>刚枪王，带队吃鸡率高，物资丰富</span>
+                    </div>
+                </div>
+                <button class="order-btn" onclick="openOrderModal('凉心煮啵', '和平精英')">
+                    <i class="fas fa-shopping-cart"></i> 立即下单
+                </button>
+            </div>
+            
+            <!-- 打手2 -->
+            <div class="player-card">
+                <div class="player-header">
+                    <div class="player-avatar">
+                        <img src="https://via.placeholder.com/60/dc3545/ffffff?text=小雨" alt="小雨总碎碎念">
+                    </div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            小雨总碎碎念
+                            <span class="badge badge-primary">王牌16星</span>
+                            <span class="status-indicator status-online"></span>
+                        </div>
+                        <div class="player-id">最高段位：王牌16星</div>
+                    </div>
+                </div>
+                <div class="player-details">
+                    <div class="detail-item">
+                        <span class="detail-label">擅长模式:</span> 
+                        <span>全能（经典/地铁/团队竞技）</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">KD:</span> 
+                        <span>7.0+</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">特点:</span> 
+                        <span>全能选手，战术丰富，沟通能力强，娱乐陪玩</span>
+                    </div>
+                </div>
+                <button class="order-btn" onclick="openOrderModal('小雨总碎碎念', '和平精英')">
+                    <i class="fas fa-shopping-cart"></i> 立即下单
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 下单模态框 -->
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title"><i class="fas fa-file-alt"></i> 下单信息</div>
+                <div class="close-btn" onclick="closeModal()">&times;</div>
+            </div>
+            <form id="orderForm">
+                <input type="hidden" id="playerName">
+                <input type="hidden" id="gameType">
+                
+                <div class="form-group">
+                    <label for="customerName"><i class="fas fa-user"></i> 您的称呼</label>
+                    <input type="text" id="customerName" placeholder="请输入您的称呼" required>
                 </div>
                 
-                <!-- 成员2 -->
-                <div class="member-card">
-                    <div class="member-img">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="李逸">
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="member-info">
-                        <h3>李逸</h3>
-                        <p>技术总监</p>
-                        <p class="bio">游戏引擎专家，精通多种编程语言和技术架构，负责团队技术路线规划。</p>
-                    </div>
+                <div class="form-group">
+                    <label for="customerPhone"><i class="fas fa-phone"></i> 联系电话</label>
+                    <input type="tel" id="customerPhone" placeholder="请输入您的手机号码" required>
                 </div>
                 
-                <!-- 成员3 -->
-                <div class="member-card">
-                    <div class="member-img">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="王梦">
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="member-info">
-                        <h3>王梦</h3>
-                        <p>美术总监</p>
-                        <p class="bio">概念艺术家出身，擅长创造独特的视觉风格，为游戏注入灵魂。</p>
-                    </div>
+                <div class="form-group">
+                    <label for="gameId"><i class="fas fa-id-card"></i> 游戏ID</label>
+                    <input type="text" id="gameId" placeholder="请输入您的游戏ID" required>
                 </div>
                 
-                <!-- 成员4 -->
-                <div class="member-card">
-                    <div class="member-img">
-                        <img src="https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="陈风">
-                        <div class="member-social">
-                            <a href="#"><i class="fab fa-twitter"></i></a>
-                            <a href="#"><i class="fab fa-linkedin"></i></a>
-                            <a href="#"><i class="fab fa-github"></i></a>
-                        </div>
-                    </div>
-                    <div class="member-info">
-                        <h3>陈风</h3>
-                        <p>音效设计师</p>
-                        <p class="bio">音乐制作人转型，擅长创造沉浸式的音效体验，为游戏增添情感层次。</p>
-                    </div>
+                <div class="form-group">
+                    <label for="gameArea"><i class="fas fa-server"></i> 游戏区服</label>
+                    <select id="gameArea" required>
+                        <option value="">请选择区服</option>
+                        <option value="QQ区">QQ区</option>
+                        <option value="微信区">微信区</option>
+                        <option value="安卓">安卓</option>
+                        <option value="iOS">iOS</option>
+                        <option value="V区">V区</option>
+                    </select>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- 联系我们 -->
-    <section class="section contact" id="contact">
-        <div class="container">
-            <h2 class="section-title">关注我们</h2>
-            <div class="contact-info">
-                <h3>获取最新资讯</h3>
-                <p>关注我们的社交媒体账号，获取工作室最新动态和游戏开发进展。</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-weibo"></i></a>
-                    <a href="#"><i class="fab fa-weixin"></i></a>
-                    <a href="#"><i class="fab fa-bilibili"></i></a>
-                    <a href="#"><i class="fab fa-qq"></i></a>
+                
+                <div class="form-group">
+                    <label for="serviceType"><i class="fas fa-concierge-bell"></i> 服务类型</label>
+                    <select id="serviceType" required>
+                        <option value="">请选择服务类型</option>
+                        <option value="排位陪玩">排位陪玩</option>
+                        <option value="段位代练">段位代练</option>
+                        <option value="教学指导">教学指导</option>
+                        <option value="娱乐陪玩">娱乐陪玩</option>
+                    </select>
                 </div>
-            </div>
+                
+                <div class="form-group">
+                    <label for="serviceTime"><i class="fas fa-clock"></i> 服务时长</label>
+                    <select id="serviceTime" required>
+                        <option value="">请选择时长</option>
+                        <option value="1小时">1小时</option>
+                        <option value="2小时">2小时</option>
+                        <option value="3小时">3小时</option>
+                        <option value="包段位">包段位</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="remarks"><i class="fas fa-edit"></i> 备注要求</label>
+                    <textarea id="remarks" rows="3" placeholder="请填写您的特殊要求（如指定英雄、时间段等）"></textarea>
+                </div>
+                
+                <button type="button" class="submit-btn" onclick="submitOrder()">
+                    <i class="fas fa-paper-plane"></i> 提交订单
+                </button>
+            </form>
         </div>
-    </section>
-
-    <!-- 页脚 -->
+    </div>
+    
     <footer>
-        <div class="container">
-            <div class="footer-container">
-                <div class="footer-col">
-                    <h3>关于星烁 </h3>
-                    <p> 星烁游戏工作室成立于2025年，致力于创造独特而深刻的游戏体验，为玩家带来非凡的娱乐享受。</p>
-                </div>
-                <div class="footer-col">
-                    <h3>快速链接</h3>
-                    <ul class="footer-links">
-                        <li><a href="#home">首页</a></li>
-                        <li><a href="#about">关于我们</a></li>
-                        <li><a href="#team">团队</a></li>
-                        <li><a href="#contact">关注我们</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>加入我们</h3>
-                    <p>我们正在寻找有才华的游戏开发者加入我们的团队。如果你对游戏开发充满热情，欢迎联系我们。</p>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>&copy; 2025 星烁游戏工作室. 保留所有权利.</p>
-            </div>
-        </div>
+        <p><i class="fas fa-copyright"></i> 2023 星烁俱乐部 版权所有</p>
+        <p>客服QQ: 3965723380 | 3865849354</p>
     </footer>
-
+    
     <script>
-        // 导航栏滚动效果
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 100) {
-                header.classList.add('header-scrolled');
-            } else {
-                header.classList.remove('header-scrolled');
+        // 切换标签页
+        function switchTab(tabId) {
+            // 切换导航标签
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            
+            // 切换内容区域
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+        }
+        
+        // 打开下单模态框
+        function openOrderModal(playerName, gameType) {
+            document.getElementById('playerName').value = playerName;
+            document.getElementById('gameType').value = gameType;
+            document.getElementById('orderModal').style.display = 'flex';
+            
+            // 自动填充游戏类型到备注
+            document.getElementById('remarks').value = `我想预约${playerName}的${gameType}陪玩服务`;
+        }
+        
+        // 关闭模态框
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+        
+        // 复制QQ号到剪贴板
+        function copyToClipboard(text) {
+            const input = document.createElement('input');
+            input.value = text;
+            document.body.appendChild(input);
+            input.select();
+            document.execCommand('copy');
+            document.body.removeChild(input);
+            
+            alert(`已复制QQ号: ${text}`);
+        }
+        
+        // 提交订单
+        function submitOrder() {
+            const playerName = document.getElementById('playerName').value;
+            const gameType = document.getElementById('gameType').value;
+            const customerName = document.getElementById('customerName').value;
+            const customerPhone = document.getElementById('customerPhone').value;
+            const gameId = document.getElementById('gameId').value;
+            const gameArea = document.getElementById('gameArea').value;
+            const serviceType = document.getElementById('serviceType').value;
+            const serviceTime = document.getElementById('serviceTime').value;
+            const remarks = document.getElementById('remarks').value;
+            
+            // 验证表单
+            if (!customerName || !customerPhone || !gameId || !gameArea || !serviceType || !serviceTime) {
+                alert('请填写完整信息');
+                return;
             }
-        });
-
-        // 移动端菜单切换
-        const hamburger = document.querySelector('.hamburger');
-        const navLinks = document.querySelector('.nav-links');
-
-        hamburger.addEventListener('click', function() {
-            this.classList.toggle('active');
-            navLinks.classList.toggle('active');
-        });
-
-        // 平滑滚动
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                if (this.classList.contains('no-scroll')) return;
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                    
-                    // 关闭移动端菜单
-                    hamburger.classList.remove('active');
-                    navLinks.classList.remove('active');
-                }
-            });
-        });
+            
+            // 验证手机号格式
+            const phoneRegex = /^1[3-9]\d{9}$/;
+            if (!phoneRegex.test(customerPhone)) {
+                alert('请输入正确的手机号码');
+                return;
+            }
+            
+            // 这里可以添加AJAX请求将订单数据发送到服务器
+            const orderData = {
+                playerName,
+                gameType,
+                customerName,
+                customerPhone,
+                gameId,
+                gameArea,
+                serviceType,
+                serviceTime,
+                remarks,
+                orderTime: new Date().toLocaleString()
+            };
+            
+            console.log('订单数据:', orderData);
+            
+            // 显示成功提示
+            alert(`订单提交成功！\n\n打手: ${playerName}\n游戏: ${gameType}\n服务: ${serviceType} ${serviceTime}\n\n稍后客服会通过电话或QQ联系您确认订单详情。`);
+            
+            // 重置表单并关闭模态框
+            document.getElementById('orderForm').reset();
+            closeModal();
+        }
+        
+        // 点击模态框外部关闭
+        window.onclick = function(event) {
+            const modal = document.getElementById('orderModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
     </script>
 </body>
 </html>
